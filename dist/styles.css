@@ -28,15 +28,64 @@ aside {
     overflow-y: auto;
 }
 
+aside ul {
+    list-style: none;
+}
+
+.aside-categories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4rem;
+}
+
+.aside-categories a {
+    text-decoration: none;
+    
+}
+
+.general-task-lists {
+    margin-bottom: 2rem;
+}
+
+.general-task-lists, .project-sec {
+    width: 85%;
+}
+
+.list-label:hover {
+    background-color: grey;
+}
+
+.list-label {
+    display: flex;
+    align-items: center;
+    color: black; 
+    gap: .3rem;
+    padding:  2px 3px;
+    border-radius: 3px;
+}
+
+
+/* Main Content Area */
+
 main {
     flex: 1;
     padding: 20px;
 }
 
-
-footer {
-    background-color: #333;
-    padding: 10px 0;
-    text-align: center;
-    color: white;
+.todo-list {
+    margin-left: 8rem;
+    margin-top: 5rem;
 }
+
+.todo-list ul {
+    list-style: none;
+}
+
+.todo-checkbox {
+    width: 1.3em;
+    height: 1.3em;
+    border-radius: 80%;
+
+}
+
