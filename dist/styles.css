@@ -73,14 +73,21 @@ main {
     padding: 20px;
 }
 
-.todo-list {
+main .project-title {
     margin-left: 8rem;
-    margin-top: 5rem;
+    margin-top: 2rem;
 }
 
-.todo-list ul {
-    list-style: none;
+.tasks-container {
+    margin-left: 8rem;
+    margin-top: 4rem;
 }
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+}
+
 
 .todo-checkbox {
     width: 1.3em;
@@ -89,3 +96,19 @@ main {
 
 }
 
+.task-item-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.task-btns{
+    display: flex;
+    gap: .3rem;
+}
+
+.add-task-btn {
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+}
