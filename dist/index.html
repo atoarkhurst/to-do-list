@@ -17,7 +17,7 @@
                 <div class="aside-categories">
                     <ul class="general-task-lists">
                         <li><a href="#" class="cat-link"><div class="list-label"><img src="../src/assets/images/inbox-icon.svg" alt="Inbox Icon" class="list-icon" width="20" height="20"> <span class="list-label">Inbox</span></div></a></li>
-                        <li><a href="#" class="cat-link"><div class="list-label"><img src="../src/assets/images/today-icon.svg" alt="Calendar Icon" class="list-icon" width="20" height="20"> <span class="list-label">Work</span></div></a></li>
+                        <li><a href="#" class="cat-link"><div class="list-label"><img src="../src/assets/images/today-icon.svg" alt="Calendar Icon" class="list-icon" width="20" height="20"> <span class="list-label">Today</span></div></a></li>
                         <li><a href="#" class="cat-link"><div class="list-label"><img src="../src/assets/images/upcoming-icon.svg" alt="Calendar Icon" class="list-icon" width="20" height="20"> <span class="list-label">Upcoming</span></div></a></li>
                     </ul>
                     <div class="project-sec">
@@ -73,7 +73,24 @@
                         <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle opacity="0.5" cx="12" cy="12" r="10" stroke="#1C274C" stroke-width="1.5"/>
                         <path d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
-                        </svg>Add task</button>
+                        </svg>Add task
+                    </button>
+
+                    <form action="">
+                        <label for="todo-title" class="visually-hidden">Title</label>
+                        <input type="text" id="todo-title" name="title" placeholder="Title: Studying">
+                        <label for="todo-descr" class="visually-hidden">Description</label>
+                        <textarea type="text" id="todo-descr" name="todo-descr" placeholder="Description"></textarea>
+                        <label for="due-date" class="visually-hidden">Due date</label>
+                        <input type="date" id="due-date" name="due-date" value="2024-01-01" min="2024-01-01"/>
+                        <select id="todo-priority" name="todo-priority">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+
+                    </form>
+
                     
                 </div>
             </main>
