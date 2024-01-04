@@ -1,5 +1,5 @@
 
-let createTodo( title, description, dueDate, priority ) {
+function createTodo( title, description, dueDate, priority ) {
     // Create empty object
     const todo = {
         title,
@@ -14,22 +14,9 @@ let createTodo( title, description, dueDate, priority ) {
 
 const addTaskBtn = document.querySelector('.add-task-btn');
 
-function getTodoInfo() { 
+addTaskBtn.addEventListener('click', getTask);
 
-    //when user clicks button make todo name field appear
+function getTask (){
 
-    const taskTitle = 
-
-    //make todo description field appear
-
-
-    //make todo date field appear 
-
-
-    //make todo priority field appear
-
-
-    // store form info in new Todo object 
-
-
+    console.log('button clicked');
 }
