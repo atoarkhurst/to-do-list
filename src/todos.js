@@ -1,22 +1,12 @@
 
-function createTodo( title, description, dueDate, priority ) {
+export function createTodo( title, description, dueDate, priority ) {
     // Create empty object
-    const todo = {
+    return {
         title,
         description,
         dueDate,
         priority,
+        completed: false,
     };
-    
-    return todo;
-    
 }
 
-const addTaskBtn = document.querySelector('.add-task-btn');
-
-addTaskBtn.addEventListener('click', getTask);
-
-function getTask (){
-
-    console.log('button clicked');
-}
