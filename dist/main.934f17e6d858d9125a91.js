@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkto_do_list=self.webpackChunkto_do_list||[]).push([[179],{258:(e,c,o)=>{const s=o.p+"d96911bcc54b2e95084b.svg",t=o.p+"540b31992cc24a5ee392.svg",u=o.p+"a95ebe6e89803e2f4888.svg";document.querySelector(".inbox-icon").src=s,document.querySelector(".tcal-icon").src=t,document.querySelector(".ucal-icon").src=u}},e=>{e(e.s=258)}]);

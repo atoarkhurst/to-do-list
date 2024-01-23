@@ -7,9 +7,9 @@ import { createTodo } from './todos';
 let taskForm;
 
 document.addEventListener('DOMContentLoaded', () => {
-    const addTaskBtn = document.querySelector('.add-task-btn');
+    const createTaskBtn = document.querySelector('.create-task-btn');
     
-    addTaskBtn.addEventListener('click', () => {
+    createTaskBtn.addEventListener('click', () => {
         if (taskForm) {
             taskForm.style.display = 'flex';
         } else {
