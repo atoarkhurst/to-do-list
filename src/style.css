@@ -19,6 +19,7 @@ header {
 
 .flex-container {
     display: flex;
+    height: 100vh;
 }
 
 aside {
@@ -27,15 +28,127 @@ aside {
     overflow-y: auto;
 }
 
+aside ul {
+    list-style: none;
+}
+
+.aside-categories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4rem;
+}
+
+.aside-categories a {
+    text-decoration: none;
+    
+}
+
+.general-task-lists {
+    margin-bottom: 2rem;
+}
+
+.general-task-lists, .project-sec {
+    width: 85%;
+}
+
+.list-label:hover {
+    background-color: grey;
+}
+
+.list-label {
+    display: flex;
+    align-items: center;
+    color: black; 
+    gap: .3rem;
+    padding:  2px 3px;
+    border-radius: 3px;
+}
+
+
+/* Main Content Area */
+
 main {
     flex: 1;
     padding: 20px;
 }
 
+.inbox {
 
-footer {
-    background-color: #333;
-    padding: 10px 0;
-    text-align: center;
-    color: white;
+    max-width: 45rem;
+}
+
+main .project-title {
+    margin-left: 8rem;
+    margin-top: 2rem;
+}
+
+.tasks-container {
+    margin-left: 8rem;
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.tasks-container button, .tasks-container select, .tasks-container #due-date {
+    align-self: start;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.todo-checkbox {
+    width: 1.3em;
+    height: 1.3em;
+    border-radius: 80%;
+
+}
+
+.task-item-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.task-btns{
+    display: flex;
+    gap: .3rem;
+}
+
+.add-task-btn {
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.task-form {
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    border: 1px solid black;
+    border-radius: .5rem;
+    padding: 1rem;
+}
+
+.task-form input,
+.task-form select,
+.task-form textarea,
+.task-form button {
+
+    border: none;
 }
