@@ -1,11 +1,19 @@
 let todos = [];
 
-export function getTodoInput(ev) {
-    ev.preventDefault();
+export function getTask() {
     
+    let title = document.querySelector('#todo-title').value;
+    let description = document.querySelector('#todo-descr').value;
+    let dueDate = document.querySelector('#due-date').value;
+    let priority = document.querySelector('#todo-priority').value;
+
+    let todo = createTask(title, description, dueDate, priority);
+
+   todos.push(todo);
+
 }
 
-export function createTodo( title, description, dueDate, priority ) {
+function createTask( title, description, dueDate, priority ) {
     // Create empty object
     return {
         title,
