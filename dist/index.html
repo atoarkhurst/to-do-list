@@ -1,46 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NextUp</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="main.js" defer></script>
-</head>
-<body>
-    <header>
-        <h1 class="logo">NextUp</h1>
-    </header>
-    <div class="flex-container">
-        
-            <aside>
-                <div class="aside-categories">
-                    <ul class="general-task-lists">
-                        <li><a href="#" class="cat-link"><div class="list-label"><img src="../src/assets/images/inbox-icon.svg" alt="Inbox Icon" class="list-icon" width="20" height="20"> <span class="list-label">Inbox</span></div></a></li>
-                        <li><a href="#" class="cat-link"><div class="list-label"><img src="../src/assets/images/today-icon.svg" alt="Calendar Icon" class="list-icon" width="20" height="20"> <span class="list-label">Work</span></div></a></li>
-                        <li><a href="#" class="cat-link"><div class="list-label"><img src="../src/assets/images/upcoming-icon.svg" alt="Calendar Icon" class="list-icon" width="20" height="20"> <span class="list-label">Upcoming</span></div></a></li>
-                    </ul>
-                    <div class="project-sec">
-                        <h2>Projects</h2>
-                        <ul class="project-lists">
-                            <li><a href="#" class="cat-link"><div class="list-label"><img src="../src/assets/images/project-list-icon.svg" alt="Inbox Icon" class="list-icon" width="20" height="20"> <span class="list-label">Personal</span></div></a></li>
-                            <li><a href="#" class="cat-link"><div class="list-label"><img src="../src/assets/images/project-list-icon.svg" alt="Inbox Icon" class="list-icon" width="20" height="20"> <span class="list-label">Work</span></div></a></li>
-                            <li><a href="#" class="cat-link"><div class="list-label"><img src="../src/assets/images/project-list-icon.svg" alt="Inbox Icon" class="list-icon" width="20" height="20"> <span class="list-label">Education</span></div></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </aside>
-        
-            <main>
-                <div class="todo-list">
-                    <h2>Inbox</h2>
-                    <ul>
-                        
-                    </ul>
-                </div>
-            </main>
-    </div>
-
-
-</body>
-</html>
+<head><script defer src="runtime.eb378734c07faac0993e.js"></script><script defer src="main.d78a6c28c8392d72e553.js"></script><link href="styles.3a604924ad72070add89.css" rel="stylesheet"></head>Html Webpack Plugin:
+<pre>
+  Error: Child compilation failed:
+  Module not found: Error: Can't resolve '/Users/atoarkhurst/Desktop/repos/to-do-list/src/index.html' in '/Users/atoarkhurst/Desktop/repos/to-do-list'
+  ModuleNotFoundError: Module not found: Error: Can't resolve '/Users/atoarkhurst/Desktop/repos/to-do-list/src/index.html' in '/Users/atoarkhurst/Desktop/repos/to-do-list'
+      at /Users/atoarkhurst/Desktop/repos/to-do-list/node_modules/webpack/lib/Compilation.js:2022:28
+      at /Users/atoarkhurst/Desktop/repos/to-do-list/node_modules/webpack/lib/NormalModuleFactory.js:817:13
+      at eval (eval at create (/Users/atoarkhurst/Desktop/repos/to-do-list/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:10:1)
+      at /Users/atoarkhurst/Desktop/repos/to-do-list/node_modules/webpack/lib/NormalModuleFactory.js:275:22
+      at eval (eval at create (/Users/atoarkhurst/Desktop/repos/to-do-list/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:9:1)
+      at /Users/atoarkhurst/Desktop/repos/to-do-list/node_modules/webpack/lib/NormalModuleFactory.js:448:22
+      at /Users/atoarkhurst/Desktop/repos/to-do-list/node_modules/webpack/lib/NormalModuleFactory.js:122:11
+      at /Users/atoarkhurst/Desktop/repos/to-do-list/node_modules/webpack/lib/NormalModuleFactory.js:689:25
+      at /Users/atoarkhurst/Desktop/repos/to-do-list/node_modules/webpack/lib/NormalModuleFactory.js:893:8
+      at /Users/atoarkhurst/Desktop/repos/to-do-list/node_modules/webpack/lib/NormalModuleFactory.js:1013:5
+  
+  - Compilation.js:2022 
+    [to-do-list]/[webpack]/lib/Compilation.js:2022:28
+  
+  - NormalModuleFactory.js:817 
+    [to-do-list]/[webpack]/lib/NormalModuleFactory.js:817:13
+  
+  
+  - NormalModuleFactory.js:275 
+    [to-do-list]/[webpack]/lib/NormalModuleFactory.js:275:22
+  
+  
+  - NormalModuleFactory.js:448 
+    [to-do-list]/[webpack]/lib/NormalModuleFactory.js:448:22
+  
+  - NormalModuleFactory.js:122 
+    [to-do-list]/[webpack]/lib/NormalModuleFactory.js:122:11
+  
+  - NormalModuleFactory.js:689 
+    [to-do-list]/[webpack]/lib/NormalModuleFactory.js:689:25
+  
+  - NormalModuleFactory.js:893 
+    [to-do-list]/[webpack]/lib/NormalModuleFactory.js:893:8
+  
+  - NormalModuleFactory.js:1013 
+    [to-do-list]/[webpack]/lib/NormalModuleFactory.js:1013:5
+  
+  - child-compiler.js:174 
+    [to-do-list]/[html-webpack-plugin]/lib/child-compiler.js:174:18
+  
+  - Compiler.js:551 finalCallback
+    [to-do-list]/[webpack]/lib/Compiler.js:551:5
+  
+  - Compiler.js:577 
+    [to-do-list]/[webpack]/lib/Compiler.js:577:11
+  
+  - Compiler.js:1200 
+    [to-do-list]/[webpack]/lib/Compiler.js:1200:17
+  
+  
+  - Hook.js:18 Hook.CALL_ASYNC_DELEGATE [as _callAsync]
+    [to-do-list]/[tapable]/lib/Hook.js:18:14
+  
+  - Compiler.js:1196 
+    [to-do-list]/[webpack]/lib/Compiler.js:1196:33
+  
+  - Compilation.js:2795 finalCallback
+    [to-do-list]/[webpack]/lib/Compilation.js:2795:11
+  
+  - Compilation.js:3100 
+    [to-do-list]/[webpack]/lib/Compilation.js:3100:11
+  
+  
+</pre>
