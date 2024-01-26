@@ -1,3 +1,5 @@
+import { displayTask } from "./display";
+
 let todos = [];
 
 export function getTask() {
@@ -9,6 +11,9 @@ export function getTask() {
 
     let todo = createTask(title, description, dueDate, priority);
 
+    
+    displayTask(todo);
+    
    todos.push(todo);
 
 }
