@@ -5,6 +5,8 @@ import plusIcon from './assets/images/plus-icon.svg';
 
 const tasksContainer = document.querySelector('.tasks-container');
 
+const taskForm =  document.querySelector('.task-form');
+
 export function displayTask(task) {
     const taskItem = document.createElement('div');
     taskItem.className = 'task-item'; 
@@ -84,3 +86,14 @@ export function displayTask(task) {
 //     const createTaskImg = document.createElement('img');
 //     const createTaskImg.src = plusIcon; 
 // }
+
+
+export function showTaskForm () {
+    if (taskForm) {
+        taskForm.style.display = 'flex';
+    } else {
+        console.error("Task form element not found");
+    }
+
+}
+

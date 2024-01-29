@@ -1,8 +1,6 @@
 import { displayTask } from "./display";
 
-let todos = [];
-
-export function getTask() {
+export function getTask(project) {
     
     let title = document.querySelector('#todo-title').value;
     let description = document.querySelector('#todo-descr').value;
@@ -11,16 +9,16 @@ export function getTask() {
 
     let todo = createTask(title, description, dueDate, priority);
 
-    
     displayTask(todo);
-    
-   todos.push(todo);
+
+   project.tasks.push(todo);
 
 }
 
 function createTask( title, description, dueDate, priority ) {
     // Create empty object
     return {
+        id: Date.now(), // Create unique id for each task
         title,
         description,
         dueDate,

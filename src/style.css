@@ -74,17 +74,12 @@ main {
 }
 
 .inbox {
-
+    margin-top: 2rem;
+    margin-left: 8rem;
     max-width: 45rem;
 }
 
-main .project-title {
-    margin-left: 8rem;
-    margin-top: 2rem;
-}
-
 .tasks-container {
-    margin-left: 8rem;
     margin-top: 4rem;
     display: flex;
     flex-direction: column;
