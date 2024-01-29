@@ -1,6 +1,7 @@
 import editIcon from './assets/images/edit.svg';
 import flagIcon from './assets/images/flag.svg';
 import trashIcon from './assets/images/trash.svg';
+import plusIcon from './assets/images/plus-icon.svg';
 
 const tasksContainer = document.querySelector('.tasks-container');
 
@@ -26,18 +27,22 @@ export function displayTask(task) {
 
     const dueDate = document.createElement('div');
     dueDate.className = 'due-date';
+    dueDate.innerHTML = task.dueDate;
 
     const taskBtns = document.createElement('div');
     taskBtns.className = 'task-btns';
 
     const editBtn = document.createElement('button');
     editBtn.className = 'edit-btn';
-    const editIcon = document.createElement('img');
-    editIcon.src = flagIcon;
-    editIcon.className = 'flag-icon';
+    const editIconImg = document.createElement('img');
+    editIconImg.src = editIcon;
+    editIconImg.className = 'edit-icon';
 
     const priorityBtn = document.createElement('button');
     priorityBtn.className = 'priority-btn';
+    const priorityIconImg = document.createElement('img');
+    priorityIconImg.src = flagIcon;
+    priorityIconImg.className = 'priority-icon';
 
     const trashBtn = document.createElement('button');
     trashBtn.className = 'trash-btn';
@@ -46,7 +51,8 @@ export function displayTask(task) {
     trashIconImg.className = 'trash-icon';
 
     // Append the icons to the buttons
-    editBtn.appendChild(editIcon);
+    editBtn.appendChild(editIconImg);
+    priorityBtn.appendChild(priorityIconImg);
     trashBtn.appendChild(trashIconImg);
 
     // Append buttons to button container
@@ -69,3 +75,12 @@ export function displayTask(task) {
     // Finally, append the task item to the tasks container
     tasksContainer.appendChild(taskItem);
 }
+
+
+// function showCreateTaskBtn(){
+
+//     const createTaskBtn = document.createElement('button');
+//     createTaskBtn.className = 'create-task-btn';
+//     const createTaskImg = document.createElement('img');
+//     const createTaskImg.src = plusIcon; 
+// }
