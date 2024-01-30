@@ -7,6 +7,8 @@ const tasksContainer = document.querySelector('.tasks-container');
 
 const taskForm =  document.querySelector('.task-form');
 
+const projectFrom = document.querySelector('.project-form');
+
 export function displayTask(task) {
     const taskItem = document.createElement('div');
     taskItem.className = 'task-item'; 
@@ -89,9 +91,18 @@ export function showTaskForm () {
 
 }
 
-export function updateTaskDisplay(task, taskID) {
+export function showProjectFrom(){
 
-    
+    if (projectFrom) {
+        projectFrom.style.display = 'flex';
+    } else {
+        console.error("Project form element not found");
+    }
 
 }
 
+// export function updateTaskDisplay(task, taskID) {
+
+// }
+
+// export function displayProject()

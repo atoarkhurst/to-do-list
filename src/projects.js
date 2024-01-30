@@ -1,4 +1,14 @@
 import { updateTaskDisplay } from "./display";
+import { addProject } from "./state";
+
+
+export function getProject(){
+
+    let title = document.querySelector('#project-title'); 
+    const project = createProject(title);
+    addProject(project);
+
+}
 
 export function createProject(title){
 
