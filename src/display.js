@@ -79,14 +79,6 @@ export function displayTask(task) {
 }
 
 
-// function showCreateTaskBtn(){
-
-//     const createTaskBtn = document.createElement('button');
-//     createTaskBtn.className = 'create-task-btn';
-//     const createTaskImg = document.createElement('img');
-//     const createTaskImg.src = plusIcon; 
-// }
-
 
 export function showTaskForm () {
     if (taskForm) {
@@ -94,6 +86,12 @@ export function showTaskForm () {
     } else {
         console.error("Task form element not found");
     }
+
+}
+
+export function updateTaskDisplay(task, taskID) {
+
+    
 
 }
 
