@@ -2,12 +2,15 @@ import editIcon from './assets/images/edit.svg';
 import flagIcon from './assets/images/flag.svg';
 import trashIcon from './assets/images/trash.svg';
 import plusIcon from './assets/images/plus-icon.svg';
+import inboxIcon from './assets/images/inbox-icon.svg';
 
 const tasksContainer = document.querySelector('.tasks-container');
 
 const taskForm =  document.querySelector('.task-form');
 
 const projectFrom = document.querySelector('.project-form');
+
+const projectsContainer = document.querySelector('.project-lists');
 
 export function displayTask(task) {
     const taskItem = document.createElement('div');
@@ -78,6 +81,19 @@ export function displayTask(task) {
 
     // Finally, append the task item to the tasks container
     tasksContainer.appendChild(taskItem);
+}
+
+export function displayProject(project){
+
+    const projectListItem = document.createElement('li');
+    const projectBtn = document.createElement('button');
+    projectBtn.className = 'list-item-btn';
+    const itemContainer = document.createElement('div');
+    itemContainer.classaName = 'list-item-container';
+    const itemIcon = document.createElement('img');
+    itemIcon.classList.add('list-icon', 'inbox-icon');
+    itemIcon.src = inboxIcon;
+
 }
 
 

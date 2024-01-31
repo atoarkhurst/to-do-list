@@ -2,10 +2,13 @@ import './style.css';
 import inboxIcon from './assets/images/inbox-icon.svg';
 import tcalIcon from './assets/images/today-icon.svg';
 import ucalIcon from './assets/images/upcoming-icon.svg';
-import { showProjectFrom, showTaskForm } from './display';
-import { createProject } from './projects';
+import { displayProject, showProjectFrom, showTaskForm } from './display';
+import { getProjectInfo, createProject } from './projects';
 import { getTask } from './todos';
-import { getCurrentProject, setCurrentProject } from './state';
+import { getCurrentProject, setCurrentProject, addProject } from './state';
+
+let newProject;
+let newprojectTitle;
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -36,8 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     projectForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        project = getCurrentProject;
-        createProject(inbox);
+        newprojectTitle= getProjectInfo();
+        newProject = createProject();
+        displayProject(newProject);
+        addProject(newProject);
     });
 
 

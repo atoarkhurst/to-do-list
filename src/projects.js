@@ -1,12 +1,13 @@
 import { updateTaskDisplay } from "./display";
-import { addProject } from "./state";
 
 
-export function getProject(){
+export function getProjectInfo(){
 
     let title = document.querySelector('#project-title'); 
+    return title;
     const project = createProject(title);
     addProject(project);
+
 
 }
 
