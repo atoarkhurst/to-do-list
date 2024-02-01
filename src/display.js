@@ -89,10 +89,25 @@ export function displayProject(project){
     const projectBtn = document.createElement('button');
     projectBtn.className = 'list-item-btn';
     const itemContainer = document.createElement('div');
-    itemContainer.classaName = 'list-item-container';
+    itemContainer.className = 'list-item-container';
     const itemIcon = document.createElement('img');
     itemIcon.classList.add('list-icon', 'inbox-icon');
     itemIcon.src = inboxIcon;
+
+    const itemLabel = document.createElement('span');
+    itemLabel.className = 'list-item-name';
+    itemLabel.innerHTML = project.title;
+
+
+    projectBtn.appendChild(itemContainer);
+
+
+    itemContainer.appendChild(itemIcon);
+    itemContainer.appendChild(itemLabel);
+
+    projectListItem.appendChild(projectBtn);
+
+    projectsContainer.appendChild(projectListItem);
 
 }
 

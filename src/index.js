@@ -13,6 +13,7 @@ let newprojectTitle;
 document.addEventListener('DOMContentLoaded', () => {
 
     const taskForm =  document.querySelector('.task-form');
+    const projectForm =  document.querySelector('.project-form');
     //Create inbox (default project)
     const inbox = createProject();
     setCurrentProject(inbox.id);
@@ -39,8 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     projectForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        newprojectTitle= getProjectInfo();
-        newProject = createProject();
+        newprojectTitle = getProjectInfo();
+        newProject = createProject(newprojectTitle);
         displayProject(newProject);
         addProject(newProject);
     });

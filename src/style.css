@@ -65,6 +65,29 @@ aside ul {
     border-radius: 3px;
 }
 
+.list-item-btn {
+    display: block; /* Makes the button full width */
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    text-align: left;
+  }
+  
+  .list-item-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .list-icon {
+    width: 20px;
+    margin-right: 10px; /* Adjust as needed */
+  }
+  
+  .list-item-btn:hover {
+    background-color: #f0f0f0; /* Example color */
+  }
+  
 
 /* Main Content Area */
 

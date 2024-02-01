@@ -3,12 +3,8 @@ import { updateTaskDisplay } from "./display";
 
 export function getProjectInfo(){
 
-    let title = document.querySelector('#project-title'); 
+    let title = document.querySelector('#project-title').value; 
     return title;
-    const project = createProject(title);
-    addProject(project);
-
-
 }
 
 export function createProject(title){
