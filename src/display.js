@@ -3,6 +3,7 @@ import flagIcon from './assets/images/flag.svg';
 import trashIcon from './assets/images/trash.svg';
 import plusIcon from './assets/images/plus-icon.svg';
 import inboxIcon from './assets/images/inbox-icon.svg';
+import { setCurrentProject } from './state';
 
 const tasksContainer = document.querySelector('.tasks-container');
 
@@ -109,7 +110,26 @@ export function displayProject(project){
 
     projectsContainer.appendChild(projectListItem);
 
+    projectBtn.addEventListener("click", displyProjectTasks);
+
 }
+
+export function displyProjectTasks(project) {
+
+    emptyTasks();
+
+    setCurrentProject(project.id);
+
+    
+    const tasks = project.tasks;
+
+}
+
+export function emptyTasks(){
+
+    tasksContainer.innerHTML = '';
+}
+
 
 
 
