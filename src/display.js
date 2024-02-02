@@ -122,7 +122,17 @@ export function showTaskForm () {
 
 }
 
-export function showProjectFrom(){
+
+export function hideTaskForm () {
+    if (taskForm) {
+        taskForm.style.display = 'none';
+    } else {
+        console.error("Task form element not found");
+    }
+
+}
+
+export function showProjectForm(){
 
     if (projectFrom) {
         projectFrom.style.display = 'flex';
@@ -130,6 +140,15 @@ export function showProjectFrom(){
         console.error("Project form element not found");
     }
 
+}
+
+export function hideProjectForm(){
+    
+    if (projectFrom) {
+        projectFrom.style.display = 'none';
+    } else {
+        console.error("Project form element not found");
+    }
 }
 
 // export function updateTaskDisplay(task, taskID) {
