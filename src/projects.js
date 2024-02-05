@@ -1,4 +1,4 @@
-import { updateTaskDisplay } from "./display";
+import { displyProjectTasks, updateTaskDisplay } from "./display";
 
 
 export function getProjectInfo(){
@@ -53,4 +53,9 @@ export function editTask ( project, taskID, title, description, dueDate, priorit
 
     updateTaskDisplay(task, taskID); 
 
+}
+
+export function createProjectListener(projectBtn, project){
+
+    projectBtn.addEventListener('click', displyProjectTasks(project));
 }

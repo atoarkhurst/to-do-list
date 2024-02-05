@@ -1,6 +1,6 @@
 import { displayTask } from "./display";
 
-export function getTask(project) {
+export function getTask() {
     
     let title = document.querySelector('#todo-title').value;
     let description = document.querySelector('#todo-descr').value;
@@ -9,9 +9,7 @@ export function getTask(project) {
 
     let todo = createTask(title, description, dueDate, priority);
 
-    displayTask(todo);
-
-   project.tasks.push(todo);
+    return todo;
 
 }
 

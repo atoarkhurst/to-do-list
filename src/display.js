@@ -110,18 +110,18 @@ export function displayProject(project){
 
     projectsContainer.appendChild(projectListItem);
 
-    projectBtn.addEventListener("click", displyProjectTasks);
 
+    return projectBtn;
 }
 
 export function displyProjectTasks(project) {
 
+    console.log('clear inbox');
+
     emptyTasks();
 
-    setCurrentProject(project.id);
+    setCurrentProject(project);
 
-    
-    const tasks = project.tasks;
 
 }
 
