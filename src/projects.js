@@ -1,7 +1,7 @@
 import { displyProjectTasks, updateTaskDisplay } from "./display";
 
 
-export function getProjectInfo(){
+export function getProjectTitle(){
 
     let title = document.querySelector('#project-title').value; 
     return title;
@@ -57,5 +57,5 @@ export function editTask ( project, taskID, title, description, dueDate, priorit
 
 export function createProjectListener(projectBtn, project){
 
-    projectBtn.addEventListener('click', displyProjectTasks(project));
+    projectBtn.addEventListener('click', () => displyProjectTasks(project));
 }

@@ -3,7 +3,7 @@ import inboxIcon from './assets/images/inbox-icon.svg';
 import tcalIcon from './assets/images/today-icon.svg';
 import ucalIcon from './assets/images/upcoming-icon.svg';
 import { displayProject, hideProjectForm, showProjectForm, showTaskForm, hideTaskForm, displayTask} from './display';
-import { getProjectInfo, createProject, createProjectListener } from './projects';
+import { getProjectTitle, createProject, createProjectListener } from './projects';
 import { getTask } from './todos';
 import { getCurrentProject, setCurrentProject, addProject } from './state';
 
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
 
         // get project info 
-        newprojectTitle = getProjectInfo();
+        newprojectTitle = getProjectTitle();
 
         // create project object
         newProject = createProject(newprojectTitle);
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // display project on sidebar
         const projectBtn = displayProject(newProject);
 
-        // createProjectListener(projectBtn, newProject);
+        createProjectListener(projectBtn, newProject);
         
 
         // hide project form from view
@@ -72,6 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // gets new task from form
         const task = getTask();
 
+        console.log('task' + task);
+
         // display task
         displayTask(task);
 
@@ -80,8 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // add task to current project's task array
         if (currentProject) {
-
-            currentProject.tasks.push(task);
+            
+            currentProject.addTask(task);
         }
 
         hideTaskForm();

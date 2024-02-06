@@ -116,12 +116,26 @@ export function displayProject(project){
 
 export function displyProjectTasks(project) {
 
+    let tasks;
+
     console.log('clear inbox');
 
     emptyTasks();
 
     setCurrentProject(project);
 
+    if (project.tasks) {
+         tasks = project.tasks;
+    }
+   
+
+
+    if (tasks) {
+
+        tasks.forEach(task => {
+            displayTask(task);
+        });
+    }
 
 }
 
