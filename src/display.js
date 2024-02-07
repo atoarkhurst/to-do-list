@@ -17,6 +17,8 @@ export function displayTask(task) {
     const taskItem = document.createElement('div');
     taskItem.className = 'task-item'; 
 
+    taskItem.id = task.id;
+
 
     const taskItemLeft = document.createElement('div');
     taskItemLeft.className = 'task-item-left';
@@ -42,6 +44,8 @@ export function displayTask(task) {
 
     const editBtn = document.createElement('button');
     editBtn.className = 'edit-btn';
+    editBtn.addEventListener('click', () => displayEditForm(task));
+
     const editIconImg = document.createElement('img');
     editIconImg.src = editIcon;
     editIconImg.className = 'edit-icon';
@@ -84,6 +88,14 @@ export function displayTask(task) {
     tasksContainer.appendChild(taskItem);
 }
 
+export function displayEditForm(task){
+
+    const taskItem = document.getElementById(task.id);
+
+    taskItem.innerHTML = '';
+
+}
+
 export function displayProject(project){
 
     const projectListItem = document.createElement('li');
@@ -117,8 +129,6 @@ export function displayProject(project){
 export function displyProjectTasks(project) {
 
     let tasks;
-
-    console.log('clear inbox');
 
     emptyTasks();
 

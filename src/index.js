@@ -72,8 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // gets new task from form
         const task = getTask();
 
-        console.log('task' + task);
-
         // display task
         displayTask(task);
 
@@ -82,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // add task to current project's task array
         if (currentProject) {
-            
+
             currentProject.addTask(task);
         }
 
