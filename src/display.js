@@ -94,6 +94,32 @@ export function displayEditForm(task){
 
     taskItem.innerHTML = '';
 
+    const taskForm = document.createElement('form');
+    const titleLabel = document.createElement('label');
+    const titleInput = document.createElement('input');
+    const descrLabel = document.createElement('label');
+    const descrInput = document.createElement('input');
+    const dateLabel = document.createElement('label');
+    const dateInput = document.createElement('input');
+    const prioritySelect = document.createElement('select');
+
+
+    titleLabel.id = 
+
+
+    const priorities = ["low", 'medium', 'high'];
+    priorities.forEach((priority) => {
+        const option = document.createElement('option');
+        option.value = priority;
+        option.textContent = priority.charAt(0).toUpperCase() + priority.slice(1); // Capitalize the first letter
+        if (task.priority === priority) {
+            option.selected = true;
+        }
+        prioritySelect.appendChild(option);
+    });
+
+
+
 }
 
 export function displayProject(project){
