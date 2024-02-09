@@ -104,8 +104,6 @@ export function displayEditForm(task){
     const prioritySelect = document.createElement('select');
 
 
-    titleLabel.id = 
-
 
     const priorities = ["low", 'medium', 'high'];
     priorities.forEach((priority) => {
