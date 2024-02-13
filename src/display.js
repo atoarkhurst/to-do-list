@@ -88,19 +88,63 @@ export function displayTask(task) {
     tasksContainer.appendChild(taskItem);
 }
 
+function createInputWithLabel({id, type, placeholder, value, labelText} ) {
+
+    const label = document.createElement('label');
+    label.htmlFor = id;
+    label.textContent = labelText; 
+    label.className = 'visually-hidden';
+
+    const input = document.createElement('input');
+    input.type = type;
+    input.id = id;
+    input.name = id;
+    input.placeholder = placeholder;
+    if (value) input.value = value; 
+
+    return { label, input };
+}
+
 export function displayEditForm(task){
 
     const taskItem = document.getElementById(task.id);
-
     taskItem.innerHTML = '';
-
     const taskForm = document.createElement('form');
-    const titleLabel = document.createElement('label');
-    const titleInput = document.createElement('input');
-    const descrLabel = document.createElement('label');
-    const descrInput = document.createElement('input');
-    const dateLabel = document.createElement('label');
-    const dateInput = document.createElement('input');
+    taskForm.className = 'task-form';
+
+    const { label: titleLabel, input: titleInput } = createInputWithLabel({
+        id: 'todo-title',
+        type: 'text',
+        placeholder: 'Title: Studying',
+        value: task.title,
+        labelText: 'Title'
+    })
+
+    taskForm.appendChild(titleLabel);
+    taskForm.appendChild(titleInput);
+
+   const { label: descrLabel, input: descrInput } = createInputWithLabel({
+        id: 'todo-descr',
+        type: 'text',
+        placeholder: 'Description: Find Quiet place, open book, and read.',
+        value: task.description,
+        labelText: 'Description'
+   })
+
+   taskForm.appendChild(descrLabel);
+   taskForm.appendChild(descrInput);
+
+   const { label: dateLabel, input: dateInput } = createInputWithLabel({
+        id: 'due-date',
+        type: 'date',
+        value: task.dueDate,
+        labelText: 'Due Date'
+    })
+
+
+    taskForm.appendChild(dateLabel);
+    taskForm.appendChild(dateInput);
+
     const prioritySelect = document.createElement('select');
 
 
@@ -117,8 +161,14 @@ export function displayEditForm(task){
     });
 
 
+    taskForm.appendChild(prioritySelect);
+
+    taskItem.appendChild(taskForm);
 
 }
+
+
+
 
 export function displayProject(project){
 
