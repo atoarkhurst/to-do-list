@@ -154,7 +154,7 @@ main {
     border: 0;
 }
 
-.task-form, .project-form {
+.task-form, .project-form, .edit-form {
     display: none;
     flex-direction: column;
     gap: 1rem;

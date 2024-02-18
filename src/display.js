@@ -110,7 +110,7 @@ export function displayEditForm(task){
     const taskItem = document.getElementById(task.id);
     taskItem.innerHTML = '';
     const taskForm = document.createElement('form');
-    taskForm.className = 'task-form';
+    
 
     const { label: titleLabel, input: titleInput } = createInputWithLabel({
         id: 'todo-title',
@@ -160,8 +160,16 @@ export function displayEditForm(task){
         prioritySelect.appendChild(option);
     });
 
+    const submitBtn = document.createElement('button');
+
+    submitBtn.className = 'edit-submit-btn';
+
+    submitBtn.addEventListener()
+
 
     taskForm.appendChild(prioritySelect);
+    taskForm.className = 'edit-form';
+    taskForm.style.display = 'flex';
 
     taskItem.appendChild(taskForm);
 
