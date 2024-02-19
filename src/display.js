@@ -4,7 +4,7 @@ import trashIcon from './assets/images/trash.svg';
 import plusIcon from './assets/images/plus-icon.svg';
 import inboxIcon from './assets/images/inbox-icon.svg';
 import { setCurrentProject, getCurrentProject } from './state';
-import { editTask } from './projects';
+import { editTask, removeTask } from './projects';
 
 const tasksContainer = document.querySelector('.tasks-container');
 
@@ -18,78 +18,15 @@ const projectsContainer = document.querySelector('.project-lists');
 
 //add tasks to task list
 export function displayTask(task) {
-    const taskItem = document.createElement('div');
-    taskItem.className = 'task-item'; 
+   
+    const taskItem = createElement( 'div', { innerHTML: taskTemplate(task) });
 
-    taskItem.id = task.id;
+    const taskBtns = document
 
+    const editBtn = createButton('edit-btn', editIcon, '', () => editTask(task));
+    const deleteBtn = createButton('delete-btn', trashIcon, '', () => deleteTask(task));
 
-    const taskItemLeft = document.createElement('div');
-    taskItemLeft.className = 'task-item-left';
-
-    const taskItemRight = document.createElement('div');
-    taskItemRight.className = 'task-item-right';
-
-    const checkbox = document.createElement('input');
-    checkbox.setAttribute('type', 'checkbox');
-    checkbox.className = 'task-check';
-
-    const taskName = document.createElement('span');
-    taskName.className = 'task-name';
-
-    taskName.innerHTML = task.title; 
-
-    const dueDate = document.createElement('div');
-    dueDate.className = 'due-date';
-    dueDate.innerHTML = task.dueDate;
-
-    const taskBtns = document.createElement('div');
-    taskBtns.className = 'task-btns';
-
-    const editBtn = document.createElement('button');
-    editBtn.className = 'edit-btn';
-    editBtn.addEventListener('click', () => displayEditForm(task));
-
-    const editIconImg = document.createElement('img');
-    editIconImg.src = editIcon;
-    editIconImg.className = 'edit-icon';
-
-    const priorityBtn = document.createElement('button');
-    priorityBtn.className = 'priority-btn';
-    const priorityIconImg = document.createElement('img');
-    priorityIconImg.src = flagIcon;
-    priorityIconImg.className = 'priority-icon';
-
-    const trashBtn = document.createElement('button');
-    trashBtn.className = 'trash-btn';
-    const trashIconImg = document.createElement('img');
-    trashIconImg.src = trashIcon;
-    trashIconImg.className = 'trash-icon';
-
-    // Append the icons to the buttons
-    editBtn.appendChild(editIconImg);
-    priorityBtn.appendChild(priorityIconImg);
-    trashBtn.appendChild(trashIconImg);
-
-    // Append buttons to button container
-    taskBtns.appendChild(editBtn);
-    taskBtns.appendChild(priorityBtn);
-    taskBtns.appendChild(trashBtn);
-
-    // Append left and right sections to the task item
-    taskItem.appendChild(taskItemLeft);
-    taskItem.appendChild(taskItemRight);
-
-    // Append the checkbox and name to the left side
-    taskItemLeft.appendChild(checkbox);
-    taskItemLeft.appendChild(taskName);
-
-    // Append due date and buttons to the right side
-    taskItemRight.appendChild(dueDate);
-    taskItemRight.appendChild(taskBtns);
-
-    // Finally, append the task item to the tasks container
-    tasksContainer.appendChild(taskItem);
+    tasksContainer.appendChild(taskEl.firstChild);
 }
 
 // Utility function to create elements with attribute and content
@@ -109,6 +46,26 @@ function createElement(tag, attrs, content) {
     return el
 }
 
+function createButton(className, iconSrc, text, onCLick) {
+    const button = document.createElement('button');
+    button.className = className;
+
+    if (iconSrc) {
+        const icon = document.createElement('img');
+        icon.src = iconSrc;
+        icon.className = 'btn-icon';
+        button.appendChild(icon);
+    }
+
+    if (text) {
+        const buttonText = document.createTextNode(text);
+        button.appendChild(buttonText);
+      }
+    
+    button.addEventListener('click', onCLick);
+    return button;
+}
+
 
 // Template function for task HTML 
 
@@ -117,8 +74,17 @@ function taskTemplate(task) {
     <div class="task-item"> id="${task.id}">
         <div class="task-item-left>
             <input type="checkbox" class="task-check"
-
-    `
+            <span class="task-name">${task.title}</span>
+        </div>
+        <div class="task-item-right">
+            <div class="due-date">${task.dueDate}</div>
+                <div class="task-btns">
+                <!-- Buttons here -->
+                </div>
+        </div>
+    </div>
+    `;
+}
 
 //Create edit form fields
 function createInputWithLabel({id, type, placeholder, value, labelText} ) {
@@ -137,6 +103,24 @@ function createInputWithLabel({id, type, placeholder, value, labelText} ) {
 
     return { label, input };
 }
+
+
+//Remove task from display
+
+function deleteTask (task) {
+
+    const taskID = task.id;
+    const project = getCurrentProject();
+
+    removedTask(project, taskID);
+
+    const removedTask = getElementById(taskID);
+
+
+    tasksContainer.removeChild(removedTask);
+
+}
+
 
 // Display edit form 
 export function displayEditForm(task){
@@ -326,73 +310,6 @@ export function hideProjectForm(){
 
 export function updateTaskDisplay(task, taskID) {
 
-    const taskItem = document.getElementById(taskID);
-
-    taskItem.innerHTML = '';
-
-    const taskItemLeft = document.createElement('div');
-    taskItemLeft.className = 'task-item-left';
-
-    const taskItemRight = document.createElement('div');
-    taskItemRight.className = 'task-item-right';
-
-    const checkbox = document.createElement('input');
-    checkbox.setAttribute('type', 'checkbox');
-    checkbox.className = 'task-check';
-
-    const taskName = document.createElement('span');
-    taskName.className = 'task-name';
-
-    taskName.innerHTML = task.title; 
-
-    const dueDate = document.createElement('div');
-    dueDate.className = 'due-date';
-    dueDate.innerHTML = task.dueDate;
-
-    const taskBtns = document.createElement('div');
-    taskBtns.className = 'task-btns';
-
-    const editBtn = document.createElement('button');
-    editBtn.className = 'edit-btn';
-    editBtn.addEventListener('click', () => displayEditForm(task));
-
-    const editIconImg = document.createElement('img');
-    editIconImg.src = editIcon;
-    editIconImg.className = 'edit-icon';
-
-    const priorityBtn = document.createElement('button');
-    priorityBtn.className = 'priority-btn';
-    const priorityIconImg = document.createElement('img');
-    priorityIconImg.src = flagIcon;
-    priorityIconImg.className = 'priority-icon';
-
-    const trashBtn = document.createElement('button');
-    trashBtn.className = 'trash-btn';
-    const trashIconImg = document.createElement('img');
-    trashIconImg.src = trashIcon;
-    trashIconImg.className = 'trash-icon';
-
-    // Append the icons to the buttons
-    editBtn.appendChild(editIconImg);
-    priorityBtn.appendChild(priorityIconImg);
-    trashBtn.appendChild(trashIconImg);
-
-    // Append buttons to button container
-    taskBtns.appendChild(editBtn);
-    taskBtns.appendChild(priorityBtn);
-    taskBtns.appendChild(trashBtn);
-
-    // Append left and right sections to the task item
-    taskItem.appendChild(taskItemLeft);
-    taskItem.appendChild(taskItemRight);
-
-    // Append the checkbox and name to the left side
-    taskItemLeft.appendChild(checkbox);
-    taskItemLeft.appendChild(taskName);
-
-    // Append due date and buttons to the right side
-    taskItemRight.appendChild(dueDate);
-    taskItemRight.appendChild(taskBtns);
 
 
 
