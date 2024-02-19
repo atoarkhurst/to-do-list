@@ -3,7 +3,8 @@ import flagIcon from './assets/images/flag.svg';
 import trashIcon from './assets/images/trash.svg';
 import plusIcon from './assets/images/plus-icon.svg';
 import inboxIcon from './assets/images/inbox-icon.svg';
-import { setCurrentProject } from './state';
+import { setCurrentProject, getCurrentProject } from './state';
+import { editTask } from './projects';
 
 const tasksContainer = document.querySelector('.tasks-container');
 
@@ -13,6 +14,9 @@ const projectFrom = document.querySelector('.project-form');
 
 const projectsContainer = document.querySelector('.project-lists');
 
+
+
+//add tasks to task list
 export function displayTask(task) {
     const taskItem = document.createElement('div');
     taskItem.className = 'task-item'; 
@@ -88,6 +92,35 @@ export function displayTask(task) {
     tasksContainer.appendChild(taskItem);
 }
 
+// Utility function to create elements with attribute and content
+function createElement(tag, attrs, content) {
+
+    el = document.createElement(tag);
+
+    for ( const attr in attrs ) {
+        el[attr] = attrs[attr]; 
+    }
+
+    if ( content ) {
+
+        el.textContent = content;
+    }
+
+    return el
+}
+
+
+// Template function for task HTML 
+
+function taskTemplate(task) {
+    return `
+    <div class="task-item"> id="${task.id}">
+        <div class="task-item-left>
+            <input type="checkbox" class="task-check"
+
+    `
+
+//Create edit form fields
 function createInputWithLabel({id, type, placeholder, value, labelText} ) {
 
     const label = document.createElement('label');
@@ -105,11 +138,18 @@ function createInputWithLabel({id, type, placeholder, value, labelText} ) {
     return { label, input };
 }
 
+// Display edit form 
 export function displayEditForm(task){
+
 
     const taskItem = document.getElementById(task.id);
     taskItem.innerHTML = '';
     const taskForm = document.createElement('form');
+
+    const project = getCurrentProject();
+
+    const taskID = task.id;
+
     
 
     const { label: titleLabel, input: titleInput } = createInputWithLabel({
@@ -162,10 +202,15 @@ export function displayEditForm(task){
 
     const submitBtn = document.createElement('button');
 
+    submitBtn.textContent = 'Update';
+
     submitBtn.className = 'edit-submit-btn';
 
-    submitBtn.addEventListener()
+    submitBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        editTask(project, taskID, titleInput.value, descrInput.value, dateInput.value, priorities.value );
 
+    });
 
     taskForm.appendChild(prioritySelect);
     taskForm.className = 'edit-form';
@@ -173,11 +218,13 @@ export function displayEditForm(task){
 
     taskItem.appendChild(taskForm);
 
+    taskForm.appendChild(submitBtn);
+
 }
 
 
 
-
+//Display project on sidebar
 export function displayProject(project){
 
     const projectListItem = document.createElement('li');
@@ -277,8 +324,77 @@ export function hideProjectForm(){
     }
 }
 
-// export function updateTaskDisplay(task, taskID) {
+export function updateTaskDisplay(task, taskID) {
 
-// }
+    const taskItem = document.getElementById(taskID);
 
-// export function displayProject()
+    taskItem.innerHTML = '';
+
+    const taskItemLeft = document.createElement('div');
+    taskItemLeft.className = 'task-item-left';
+
+    const taskItemRight = document.createElement('div');
+    taskItemRight.className = 'task-item-right';
+
+    const checkbox = document.createElement('input');
+    checkbox.setAttribute('type', 'checkbox');
+    checkbox.className = 'task-check';
+
+    const taskName = document.createElement('span');
+    taskName.className = 'task-name';
+
+    taskName.innerHTML = task.title; 
+
+    const dueDate = document.createElement('div');
+    dueDate.className = 'due-date';
+    dueDate.innerHTML = task.dueDate;
+
+    const taskBtns = document.createElement('div');
+    taskBtns.className = 'task-btns';
+
+    const editBtn = document.createElement('button');
+    editBtn.className = 'edit-btn';
+    editBtn.addEventListener('click', () => displayEditForm(task));
+
+    const editIconImg = document.createElement('img');
+    editIconImg.src = editIcon;
+    editIconImg.className = 'edit-icon';
+
+    const priorityBtn = document.createElement('button');
+    priorityBtn.className = 'priority-btn';
+    const priorityIconImg = document.createElement('img');
+    priorityIconImg.src = flagIcon;
+    priorityIconImg.className = 'priority-icon';
+
+    const trashBtn = document.createElement('button');
+    trashBtn.className = 'trash-btn';
+    const trashIconImg = document.createElement('img');
+    trashIconImg.src = trashIcon;
+    trashIconImg.className = 'trash-icon';
+
+    // Append the icons to the buttons
+    editBtn.appendChild(editIconImg);
+    priorityBtn.appendChild(priorityIconImg);
+    trashBtn.appendChild(trashIconImg);
+
+    // Append buttons to button container
+    taskBtns.appendChild(editBtn);
+    taskBtns.appendChild(priorityBtn);
+    taskBtns.appendChild(trashBtn);
+
+    // Append left and right sections to the task item
+    taskItem.appendChild(taskItemLeft);
+    taskItem.appendChild(taskItemRight);
+
+    // Append the checkbox and name to the left side
+    taskItemLeft.appendChild(checkbox);
+    taskItemLeft.appendChild(taskName);
+
+    // Append due date and buttons to the right side
+    taskItemRight.appendChild(dueDate);
+    taskItemRight.appendChild(taskBtns);
+
+
+
+}
+

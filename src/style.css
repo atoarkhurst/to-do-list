@@ -137,12 +137,6 @@ main {
     gap: .3rem;
 }
 
-.add-task-btn {
-    display: flex;
-    align-items: center;
-    gap: .3rem;
-}
-
 .visually-hidden {
     position: absolute;
     width: 1px;

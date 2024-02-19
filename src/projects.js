@@ -51,6 +51,7 @@ export function editTask ( project, taskID, title, description, dueDate, priorit
         task.title = priority;
     }
 
+
     updateTaskDisplay(task, taskID); 
 
 }
