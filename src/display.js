@@ -19,20 +19,50 @@ const projectsContainer = document.querySelector('.project-lists');
 //add tasks to task list
 export function displayTask(task) {
    
-    const taskItem = createElement( 'div', { innerHTML: taskTemplate(task) });
+    //Create task item container
+    const taskItem = createElement('div', {className: 'task-item', id: task.id});
 
-    const taskBtns = document
+    // Create left and right sections 
+    const taskItemLeft = createElement('div', {className: 'task-item-left'});
+    const taskItemRight = createElement('div',{className: 'task-item-right'} );
 
-    const editBtn = createButton('edit-btn', editIcon, '', () => editTask(task));
-    const deleteBtn = createButton('delete-btn', trashIcon, '', () => deleteTask(task));
+    //add left side contents
+    const checkbox = createElement('input', {type: 'checkbox', class: 'task-check'});
+    const taskName = createElement('span', {className: 'task-name', textContent: task.title});
 
-    tasksContainer.appendChild(taskEl.firstChild);
+    taskItemLeft.appendChild(checkbox);
+    taskItemLeft.appendChild(taskName);
+
+    //add right side content
+    const dueDate = createElement('div', {className: 'due-date', textContent: task.dueDate});
+    const taskBtns = createElement('div', {className: 'task-btns'});
+
+     // Create and append Edit and Delete buttons
+     const editBtn = createButton('edit-btn', editIcon, '', () => editTask(task));
+     const deleteBtn = createButton('delete-btn', trashIcon, '', () => deleteTask(task));
+     taskBtns.appendChild(editBtn);
+     taskBtns.appendChild(deleteBtn);
+ 
+
+    taskItemRight.appendChild(dueDate);
+    taskItemRight.appendChild(taskBtns);
+
+
+
+    // Append sections to taskItem
+    taskItemRight.appendChild(taskBtns);
+    taskItem.appendChild(taskItemLeft);
+    taskItem.appendChild(taskItemRight);
+
+    // Append taskItem to the container
+    tasksContainer.appendChild(taskItem);
+
 }
 
 // Utility function to create elements with attribute and content
 function createElement(tag, attrs, content) {
 
-    el = document.createElement(tag);
+   const el = document.createElement(tag);
 
     for ( const attr in attrs ) {
         el[attr] = attrs[attr]; 
@@ -64,26 +94,6 @@ function createButton(className, iconSrc, text, onCLick) {
     
     button.addEventListener('click', onCLick);
     return button;
-}
-
-
-// Template function for task HTML 
-
-function taskTemplate(task) {
-    return `
-    <div class="task-item"> id="${task.id}">
-        <div class="task-item-left>
-            <input type="checkbox" class="task-check"
-            <span class="task-name">${task.title}</span>
-        </div>
-        <div class="task-item-right">
-            <div class="due-date">${task.dueDate}</div>
-                <div class="task-btns">
-                <!-- Buttons here -->
-                </div>
-        </div>
-    </div>
-    `;
 }
 
 //Create edit form fields
