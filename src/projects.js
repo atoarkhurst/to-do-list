@@ -54,6 +54,8 @@ export function editTask ( project, taskID, title, description, dueDate, priorit
 
     updateTaskDisplay(task, taskID); 
 
+    console.log(task);
+
 }
 
 export function createProjectListener(projectBtn, project){

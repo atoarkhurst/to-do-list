@@ -37,8 +37,10 @@ export function displayTask(task) {
     const dueDate = createElement('div', {className: 'due-date', textContent: task.dueDate});
     const taskBtns = createElement('div', {className: 'task-btns'});
 
+    const project = getCurrentProject();
+
      // Create and append Edit and Delete buttons
-     const editBtn = createButton('edit-btn', editIcon, '', () => editTask(task));
+     const editBtn = createButton('edit-btn', editIcon, '', () => displayEditForm(task));
      const deleteBtn = createButton('delete-btn', trashIcon, '', () => deleteTask(task));
      taskBtns.appendChild(editBtn);
      taskBtns.appendChild(deleteBtn);
@@ -137,7 +139,7 @@ export function displayEditForm(task){
 
 
     const taskItem = document.getElementById(task.id);
-    taskItem.innerHTML = '';
+    taskItem.style.display = 'none';
     const taskForm = document.createElement('form');
 
     const project = getCurrentProject();

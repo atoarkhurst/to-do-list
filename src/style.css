@@ -79,10 +79,6 @@ aside ul {
     align-items: center;
   }
   
-  .btn-icon {
-    width: 20px;
-    margin-right: 10px; /* Adjust as needed */
-  }
   
   .list-item-btn:hover {
     background-color: #f0f0f0; /* Example color */
