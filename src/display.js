@@ -138,8 +138,15 @@ function deleteTask (task) {
 export function displayEditForm(task){
 
 
+    const container = document.body; 
+
     const taskItem = document.getElementById(task.id);
-    taskItem.style.display = 'none';
+
+    const editModal = document.createElement('div');
+    editModal.className = 'edit-modal';
+
+
+
     const taskForm = document.createElement('form');
 
     const project = getCurrentProject();
@@ -212,9 +219,13 @@ export function displayEditForm(task){
     taskForm.className = 'edit-form';
     taskForm.style.display = 'flex';
 
-    taskItem.appendChild(taskForm);
 
     taskForm.appendChild(submitBtn);
+
+    editModal.appendChild(taskForm);
+
+    container.appendChild(editModal);
+
 
 }
 
@@ -321,6 +332,17 @@ export function hideProjectForm(){
 }
 
 export function updateTaskDisplay(task, taskID) {
+
+
+    const editModal = document.querySelector('.edit-modal');
+
+    editModal.style.display = 'none';
+
+    const taskItem = document.getElementById(taskID);
+
+    
+    console.log(taskItem);
+
 
 
 

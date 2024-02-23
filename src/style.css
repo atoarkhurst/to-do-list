@@ -160,3 +160,49 @@ main {
 
     border: none;
 }
+
+
+/* Edit Modal */
+.edit-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the modal */
+    width: 80%; /* or fixed width, e.g., 500px */
+    max-width: 600px; /* Maximum width of the modal */
+    background-color: #fff; /* Background color */
+    padding: 20px; /* Padding inside the modal */
+    z-index: 1001; /* Above the backdrop */
+    border-radius: 8px; /* Optional: rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: shadow for depth */
+}
+
+/* Edit Form within the Modal */
+.edit-modal form {
+    display: flex;
+    flex-direction: column; /* Stack form elements vertically */
+}
+
+/* Input fields styling */
+.edit-modal form input,
+.edit-modal form select {
+    padding: 10px;
+    margin-bottom: 15px; /* Space between form elements */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 4px; /* Rounded borders */
+}
+
+/* Button within the modal */
+.edit-modal form .edit-submit-btn {
+    padding: 10px 20px;
+    background-color: #007bff; /* Example: Bootstrap primary color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s; /* Smooth transition for hover effect */
+}
+
+.edit-modal form .edit-submit-btn:hover {
+    background-color: #0056b3; /* Darken the button slightly on hover */
+}
