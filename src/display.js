@@ -340,8 +340,13 @@ export function updateTaskDisplay(task, taskID) {
 
     const taskItem = document.getElementById(taskID);
 
-    
-    console.log(taskItem);
+    const taskName = taskItem.querySelector('.task-name');
+    const taskDate = taskItem.querySelector('.due-date');
+
+    taskName.textContent = task.title;
+    taskDate.textContent = task.dueDate;
+
+
 
 
 
