@@ -10,6 +10,46 @@
     <header>
         <h1 class="logo">nextUp</h1>
     </header>
+    <div class="modal hidden" id="create-modal">
+        <form class="create-task-form" action="">
+            <label for="todo-title" class="visually-hidden">Title</label>
+            <input type="text" id="todo-title" name="title" placeholder="Title: Studying">
+            <label for="todo-descr" class="visually-hidden">Description</label>
+            <textarea type="text" id="todo-descr" name="todo-descr" placeholder="Description"></textarea>
+            <label for="due-date" class="visually-hidden">Due date</label>
+            <input type="date" id="due-date" name="due-date" value="2024-01-01" min="2024-01-01"/>
+            <select id="todo-priority" name="todo-priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <div class="form-btns">
+                <button id="add-task-btn" class="submit-btn"> Add Task</button>
+                <button type="button" class="cancel-btn"> Cancel</button>
+            </div>
+        </form>
+    </div>
+    <div class="modal hidden" id="edit-modal">
+        <form class="create-task-form" action="">
+            <label for="edit-title" class="visually-hidden">Title</label>
+            <input type="text" id="edit-title" name="title" placeholder="Title: Studying">
+            <label for="edit-descr" class="visually-hidden">Description</label>
+            <textarea type="text" id="edit-descr" name="todo-descr" placeholder="Description"></textarea>
+            <label for="edit-due-date" class="visually-hidden">Due date</label>
+            <input type="date" id="edit-due-date" name="due-date" value="2024-01-01" min="2024-01-01"/>
+            <select id="edit-priority" name="edit-priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <div class="form-btns">
+                <button id="edit-task-btn" class="submit-btn"> Add Task</button>
+                <button type="button" class="cancel-btn">Cancel</button>
+            </div>
+        </form>
+        
+    </div>
+    <div class="overlay hidden"></div>
     <div class="flex-container">
         
             <aside>
@@ -27,7 +67,7 @@
                             <li><a href="#" class="cat-link"><div class="list-label"><img alt="Inbox Icon" class="list-icon inbox-icon" width="20" height="20"> <span class="list-label">Education</span></div></a></li>
                         </ul>
                         <button class="create-project-btn">Add Project</button>
-                        <form class="project-form" action="">
+                        <form class="project-form hidden" action="">
                             <label for="project-title" class="visually-hidden">Title</label>
                             <input type="text" id="project-title" name="title" placeholder="Title: Academics">
                             <button id="add-project-btn"> Add Project</button>
@@ -79,20 +119,7 @@
                         <circle opacity="0.5" cx="12" cy="12" r="10" stroke="#1C274C" stroke-width="1.5"/>
                         <path d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
                         </svg></button>
-                    <form class="task-form" action="">
-                        <label for="todo-title" class="visually-hidden">Title</label>
-                        <input type="text" id="todo-title" name="title" placeholder="Title: Studying">
-                        <label for="todo-descr" class="visually-hidden">Description</label>
-                        <textarea type="text" id="todo-descr" name="todo-descr" placeholder="Description"></textarea>
-                        <label for="due-date" class="visually-hidden">Due date</label>
-                        <input type="date" id="due-date" name="due-date" value="2024-01-01" min="2024-01-01"/>
-                        <select id="todo-priority" name="todo-priority">
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                        </select>
-                        <button id="add-task-btn"> Add Task</button>
-                    </form>
+                   
                 </div>
             </main>
     </div>

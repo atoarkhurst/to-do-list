@@ -7,17 +7,27 @@ import { setCurrentProject, getCurrentProject } from './state';
 import { editTask, removeTask } from './projects';
 
 const tasksContainer = document.querySelector('.tasks-container');
-
 const taskForm =  document.querySelector('.task-form');
-
-const projectFrom = document.querySelector('.project-form');
-
+const projectForm = document.querySelector('.project-form');
 const projectsContainer = document.querySelector('.project-lists');
 
+const createModal = document.getElementById('create-modal');
+const editModal = document.getElementById('edit-modal');
+const overlay = document.querySelector('.overlay');
+
+
+const cancelAddTaskBtn = createModal.querySelector('.cancel-btn');
+
+cancelAddTaskBtn.addEventListener('click', hideTaskForm);
+
+const cancelEditTaskBtn = editModal.querySelector('.cancel-btn');
+
+cancelEditTaskBtn.addEventListener('click', hideEditForm);
 
 
 //add tasks to task list
 export function displayTask(task) {
+   
    
     //Create task item container
     const taskItem = createElement('div', {className: 'task-item', id: task.id});
@@ -40,7 +50,7 @@ export function displayTask(task) {
     const project = getCurrentProject();
 
      // Create and append Edit and Delete buttons
-     const editBtn = createButton('edit-btn', editIcon, '', () => displayEditForm(task));
+     const editBtn = createButton('edit-btn', editIcon, '', () => showEditForm(task));
      const deleteBtn = createButton('delete-btn', trashIcon, '', () => deleteTask(task));
      taskBtns.appendChild(editBtn);
      taskBtns.appendChild(deleteBtn);
@@ -98,24 +108,6 @@ function createButton(className, iconSrc, text, onCLick) {
     return button;
 }
 
-//Create edit form fields
-function createInputWithLabel({id, type, placeholder, value, labelText} ) {
-
-    const label = document.createElement('label');
-    label.htmlFor = id;
-    label.textContent = labelText; 
-    label.className = 'visually-hidden';
-
-    const input = document.createElement('input');
-    input.type = type;
-    input.id = id;
-    input.name = id;
-    input.placeholder = placeholder;
-    if (value) input.value = value; 
-
-    return { label, input };
-}
-
 
 //Remove task from display
 
@@ -135,98 +127,50 @@ function deleteTask (task) {
 
 
 // Display edit form 
-export function displayEditForm(task){
+export function showEditForm(task){
 
 
-    const container = document.body; 
-
-    const taskItem = document.getElementById(task.id);
-
-    const editModal = document.createElement('div');
-    editModal.className = 'edit-modal';
+    if (editModal) {
 
 
-
-    const taskForm = document.createElement('form');
-
-    const project = getCurrentProject();
-
-    const taskID = task.id;
-
+        const project = getCurrentProject();
     
+        const taskID = task.id;
 
-    const { label: titleLabel, input: titleInput } = createInputWithLabel({
-        id: 'todo-title',
-        type: 'text',
-        placeholder: 'Title: Studying',
-        value: task.title,
-        labelText: 'Title'
-    })
+        const title = document.getElementById('edit-title');
+        title.value = task.title;
 
-    taskForm.appendChild(titleLabel);
-    taskForm.appendChild(titleInput);
+        const descr = document.getElementById('edit-descr');
+        descr.value = task.description;
 
-   const { label: descrLabel, input: descrInput } = createInputWithLabel({
-        id: 'todo-descr',
-        type: 'text',
-        placeholder: 'Description: Find Quiet place, open book, and read.',
-        value: task.description,
-        labelText: 'Description'
-   })
+        const date = document.getElementById('edit-due-date');
+        date.value = task.dueDate;
 
-   taskForm.appendChild(descrLabel);
-   taskForm.appendChild(descrInput);
+        const priority = document.getElementById('edit-priority');
+        priority.value = task.priority;
 
-   const { label: dateLabel, input: dateInput } = createInputWithLabel({
-        id: 'due-date',
-        type: 'date',
-        value: task.dueDate,
-        labelText: 'Due Date'
-    })
+        editModal.classList.remove('hidden');
+        overlay.classList.remove('hidden');
 
+        const submitBtn = document.getElementById('edit-task-btn');
 
-    taskForm.appendChild(dateLabel);
-    taskForm.appendChild(dateInput);
+        console.log(title.value);
 
-    const prioritySelect = document.createElement('select');
+        submitBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            editTask();
+        });
+    }
+}
 
+// Hide edit form 
+export function hideEditForm(){
 
+    if (editModal) {
 
-    const priorities = ["low", 'medium', 'high'];
-    priorities.forEach((priority) => {
-        const option = document.createElement('option');
-        option.value = priority;
-        option.textContent = priority.charAt(0).toUpperCase() + priority.slice(1); // Capitalize the first letter
-        if (task.priority === priority) {
-            option.selected = true;
-        }
-        prioritySelect.appendChild(option);
-    });
-
-    const submitBtn = document.createElement('button');
-
-    submitBtn.textContent = 'Update';
-
-    submitBtn.className = 'edit-submit-btn';
-
-    submitBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        editTask(project, taskID, titleInput.value, descrInput.value, dateInput.value, priorities.value );
-
-    });
-
-    taskForm.appendChild(prioritySelect);
-    taskForm.className = 'edit-form';
-    taskForm.style.display = 'flex';
-
-
-    taskForm.appendChild(submitBtn);
-
-    editModal.appendChild(taskForm);
-
-    container.appendChild(editModal);
-
-
+        editModal.classList.add('hidden');
+        overlay.classList.add('hidden');
+    }
 }
 
 
@@ -294,8 +238,9 @@ export function emptyTasks(){
 
 
 export function showTaskForm () {
-    if (taskForm) {
-        taskForm.style.display = 'flex';
+    if (createModal) {
+        createModal.classList.remove('hidden');
+        overlay.classList.remove('hidden');
     } else {
         console.error("Task form element not found");
     }
@@ -304,8 +249,9 @@ export function showTaskForm () {
 
 
 export function hideTaskForm () {
-    if (taskForm) {
-        taskForm.style.display = 'none';
+    if (createModal) {
+        createModal.classList.add('hidden');
+        overlay.classList.add('hidden');
     } else {
         console.error("Task form element not found");
     }
@@ -314,8 +260,8 @@ export function hideTaskForm () {
 
 export function showProjectForm(){
 
-    if (projectFrom) {
-        projectFrom.style.display = 'flex';
+    if (projectForm) {
+        projectForm.classList.remove('hidden');
     } else {
         console.error("Project form element not found");
     }
@@ -324,8 +270,8 @@ export function showProjectForm(){
 
 export function hideProjectForm(){
     
-    if (projectFrom) {
-        projectFrom.style.display = 'none';
+    if (projectForm) {
+        projectForm.classList.add('hidden');
     } else {
         console.error("Project form element not found");
     }
@@ -334,17 +280,15 @@ export function hideProjectForm(){
 export function updateTaskDisplay(task, taskID) {
 
 
-    const editModal = document.querySelector('.edit-modal');
-
-    editModal.style.display = 'none';
+    hideEditForm();
 
     const taskItem = document.getElementById(taskID);
 
-    
-    console.log(taskItem);
+    const taskName = taskItem.querySelector('.task-name');
+    const taskDate = taskItem.querySelector('.due-date');
 
-
-
+    taskName.textContent = task.title;
+    taskDate.textContent = task.dueDate;
 
 
 }

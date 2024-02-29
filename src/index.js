@@ -13,7 +13,7 @@ let currentProject;
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const taskForm =  document.querySelector('.task-form');
+    const createTaskForm =  document.querySelector('.create-task-form');
     const projectForm =  document.querySelector('.project-form');
 
     //create inbox (default project)
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // create new task when task form is submitted
-    taskForm.addEventListener('submit', (e) => {
+    createTaskForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
         // gets new task from form

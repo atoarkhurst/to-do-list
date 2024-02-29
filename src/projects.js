@@ -1,5 +1,7 @@
 import { displyProjectTasks, updateTaskDisplay } from "./display";
 
+const editModal = document.getElementById('edit-modal');
+
 
 export function getProjectTitle(){
 
@@ -26,7 +28,10 @@ export function removeTask(project, taskID) {
 }
 
 
-export function editTask ( project, taskID, title, description, dueDate, priority ) {
+export function editTask () {
+
+    const
+
 
     const task = project.tasks.find(task => task.id ==  taskID);
 
@@ -53,8 +58,6 @@ export function editTask ( project, taskID, title, description, dueDate, priorit
 
 
     updateTaskDisplay(task, taskID); 
-
-    console.log(task);
 
 }
 
