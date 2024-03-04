@@ -15,6 +15,8 @@ const createModal = document.getElementById('create-modal');
 const editModal = document.getElementById('edit-modal');
 const overlay = document.querySelector('.overlay');
 
+const projectHeader = document.querySelector('.project-title');
+
 
 const cancelAddTaskBtn = createModal.querySelector('.cancel-btn');
 
@@ -46,8 +48,6 @@ export function displayTask(task) {
     //add right side content
     const dueDate = createElement('div', {className: 'due-date', textContent: task.dueDate});
     const taskBtns = createElement('div', {className: 'task-btns'});
-
-    const project = getCurrentProject();
 
      // Create and append Edit and Delete buttons
      const editBtn = createButton('edit-btn', editIcon, '', () => showEditForm(task));
@@ -116,9 +116,9 @@ function deleteTask (task) {
     const taskID = task.id;
     const project = getCurrentProject();
 
-    removedTask(project, taskID);
+    removeTask(project, taskID);
 
-    const removedTask = getElementById(taskID);
+    const removedTask = document.getElementById(taskID);
 
 
     tasksContainer.removeChild(removedTask);
@@ -131,9 +131,6 @@ export function showEditForm(task){
 
 
     if (editModal) {
-
-
-        const project = getCurrentProject();
     
         const taskID = task.id;
 
@@ -154,11 +151,11 @@ export function showEditForm(task){
 
         const submitBtn = document.getElementById('edit-task-btn');
 
-        console.log(title.value);
+
 
         submitBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            editTask();
+            editTask(taskID);
         });
     }
 }
@@ -177,6 +174,10 @@ export function hideEditForm(){
 
 //Display project on sidebar
 export function displayProject(project){
+
+    const projectTitle = project.title;
+
+    projectHeader.textContent = projectTitle;
 
     const projectListItem = document.createElement('li');
     const projectBtn = document.createElement('button');
@@ -207,6 +208,13 @@ export function displayProject(project){
 }
 
 export function displyProjectTasks(project) {
+
+    const projectTitle = project.title;
+
+    if ( projectHeader !== project.title ) {
+        projectHeader.textContent = projectTitle;
+    }
+    
 
     let tasks;
 

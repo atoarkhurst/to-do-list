@@ -1,6 +1,5 @@
 import { displyProjectTasks, updateTaskDisplay } from "./display";
-
-const editModal = document.getElementById('edit-modal');
+import { getCurrentProject } from "./state";
 
 
 export function getProjectTitle(){
@@ -24,14 +23,18 @@ export function createProject(title){
 }
 
 export function removeTask(project, taskID) {
-    project.tasks = project.taks.filter(task => task.id !== taskID);
+    project.tasks = project.tasks.filter(task => task.id !== taskID);
 }
 
 
-export function editTask () {
+export function editTask (taskID) {
 
-    const
+    const title = document.getElementById('edit-title').value;
+    const descr = document.getElementById('edit-descr').value;
+    const dueDate = document.getElementById('edit-due-date').value;
+    const priority = document.getElementById('edit-priority').value;
 
+    const project = getCurrentProject();
 
     const task = project.tasks.find(task => task.id ==  taskID);
 
@@ -44,8 +47,8 @@ export function editTask () {
         task.title = title;
     } 
 
-    if (description) {
-        task.description = description;
+    if (descr) {
+        task.description = descr;
     }
 
     if (dueDate) {
@@ -53,8 +56,11 @@ export function editTask () {
     }
 
     if (priority) {
-        task.title = priority;
+        task.priority = priority;
     }
+
+
+    console.log(task);
 
 
     updateTaskDisplay(task, taskID); 
