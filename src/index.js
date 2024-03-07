@@ -10,6 +10,7 @@ import { getCurrentProject, setCurrentProject, addProject } from './state';
 let newProject;
 let newprojectTitle;
 let currentProject;
+const inboxBtn = document.querySelector('.inbox-btn');
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -19,6 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
     //create inbox (default project)
     const inbox = createProject();
     setCurrentProject(inbox);
+
+    inboxBtn.addEventListener('click', () => {
+        displayProject(inbox); 
+    });
 
     // show task form on click
     const createTaskBtn = document.querySelector('.create-task-btn');
@@ -82,6 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentProject) {
 
             currentProject.addTask(task);
+            inbox.addTask(task);
         }
 
         hideTaskForm();

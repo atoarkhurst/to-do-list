@@ -11,6 +11,7 @@ const taskForm =  document.querySelector('.task-form');
 const projectForm = document.querySelector('.project-form');
 const projectsContainer = document.querySelector('.project-lists');
 
+
 const createModal = document.getElementById('create-modal');
 const editModal = document.getElementById('edit-modal');
 const overlay = document.querySelector('.overlay');
@@ -25,6 +26,7 @@ cancelAddTaskBtn.addEventListener('click', hideTaskForm);
 const cancelEditTaskBtn = editModal.querySelector('.cancel-btn');
 
 cancelEditTaskBtn.addEventListener('click', hideEditForm);
+
 
 
 //add tasks to task list
