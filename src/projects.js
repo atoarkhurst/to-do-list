@@ -1,4 +1,4 @@
-import { displyProjectTasks, updateTaskDisplay } from "./display";
+import { displayProjectTasks, updateTaskDisplay } from "./display";
 import { getCurrentProject } from "./state";
 
 
@@ -69,5 +69,5 @@ export function editTask (taskID) {
 
 export function createProjectListener(projectBtn, project){
 
-    projectBtn.addEventListener('click', () => displyProjectTasks(project));
+    projectBtn.addEventListener('click', () => displayProjectTasks(project));
 }

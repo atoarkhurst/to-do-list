@@ -2,7 +2,7 @@ import './style.css';
 import inboxIcon from './assets/images/inbox-icon.svg';
 import tcalIcon from './assets/images/today-icon.svg';
 import ucalIcon from './assets/images/upcoming-icon.svg';
-import { displayProject, hideProjectForm, showProjectForm, showTaskForm, hideTaskForm, displayTask} from './display';
+import { displayProject, hideProjectForm, showProjectForm, showTaskForm, hideTaskForm, displayTask, displayProjectTasks} from './display';
 import { getProjectTitle, createProject, createProjectListener } from './projects';
 import { getTask } from './todos';
 import { getCurrentProject, setCurrentProject, addProject } from './state';
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setCurrentProject(inbox);
 
     inboxBtn.addEventListener('click', () => {
-        displayProject(inbox); 
+        displayProjectTasks(inbox); 
     });
 
     // show task form on click

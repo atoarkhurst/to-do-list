@@ -209,7 +209,7 @@ export function displayProject(project){
     return projectBtn;
 }
 
-export function displyProjectTasks(project) {
+export function displayProjectTasks(project) {
 
     const projectTitle = project.title;
 
