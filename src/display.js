@@ -3,7 +3,7 @@ import flagIcon from './assets/images/flag.svg';
 import trashIcon from './assets/images/trash.svg';
 import plusIcon from './assets/images/plus-icon.svg';
 import inboxIcon from './assets/images/inbox-icon.svg';
-import { setCurrentProject, getCurrentProject } from './state';
+import { setCurrentProject, getCurrentProject, getAllProjects } from './state';
 import { editTask, removeTask } from './projects';
 
 const tasksContainer = document.querySelector('.tasks-container');
@@ -26,8 +26,6 @@ cancelAddTaskBtn.addEventListener('click', hideTaskForm);
 const cancelEditTaskBtn = editModal.querySelector('.cancel-btn');
 
 cancelEditTaskBtn.addEventListener('click', hideEditForm);
-
-
 
 //add tasks to task list
 export function displayTask(task) {
@@ -177,10 +175,6 @@ export function hideEditForm(){
 //Display project on sidebar
 export function displayProject(project){
 
-    const projectTitle = project.title;
-
-    projectHeader.textContent = projectTitle;
-
     const projectListItem = document.createElement('li');
     const projectBtn = document.createElement('button');
     projectBtn.className = 'list-item-btn';
@@ -212,6 +206,8 @@ export function displayProject(project){
 export function displayProjectTasks(project) {
 
     const projectTitle = project.title;
+
+    projectHeader.textContent = projectTitle;
 
     if ( projectHeader !== project.title ) {
         projectHeader.textContent = projectTitle;
@@ -248,6 +244,7 @@ export function emptyTasks(){
 
 
 export function showTaskForm () {
+
     if (createModal) {
         createModal.classList.remove('hidden');
         overlay.classList.remove('hidden');
@@ -259,6 +256,7 @@ export function showTaskForm () {
 
 
 export function hideTaskForm () {
+
     if (createModal) {
         createModal.classList.add('hidden');
         overlay.classList.add('hidden');
@@ -266,6 +264,9 @@ export function hideTaskForm () {
         console.error("Task form element not found");
     }
 
+    const createForm = createModal.querySelector('.create-task-form');
+
+    createForm.reset();
 }
 
 export function showProjectForm(){
@@ -279,6 +280,8 @@ export function showProjectForm(){
 }
 
 export function hideProjectForm(){
+
+    projectForm.reset();
     
     if (projectForm) {
         projectForm.classList.add('hidden');
@@ -303,3 +306,36 @@ export function updateTaskDisplay(task, taskID) {
 
 }
 
+//Display all tasks in inbox
+
+export function displayInbox(inbox){
+
+    emptyTasks();
+
+    const projectTitle = inbox.title;
+
+    projectHeader.textContent = projectTitle;
+
+    setCurrentProject(inbox);
+
+
+    const allProjects = getAllProjects();
+
+    allProjects.forEach(project => {
+
+        if (project.tasks) {
+
+            const tasks = project.tasks;
+           
+            tasks.forEach(task => {
+
+                displayTask(task);
+            });
+
+        }
+
+
+  
+
+    });
+}

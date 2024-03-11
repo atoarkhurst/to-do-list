@@ -1,5 +1,5 @@
 let projects = [];
-let currentProjectID; 
+let currentProject; 
 
 export function addProject(project){
 
@@ -10,14 +10,23 @@ export function addProject(project){
 
 export function getCurrentProject(){
 
-    return currentProjectID
+    console.log(currentProject);
+    console.log(projects);
+
+    return currentProject
 }
 
 
-export function setCurrentProject(projectID){
+export function setCurrentProject(project){
 
-    if (projectID) {
-        currentProjectID = projectID;
+    if (project) {
+        currentProject = project;
     }
     
+}
+
+//Find and return project using ID
+export function getAllProjects(){
+
+    return projects;
 }

@@ -71,3 +71,4 @@ export function createProjectListener(projectBtn, project){
 
     projectBtn.addEventListener('click', () => displayProjectTasks(project));
 }
+

@@ -2,10 +2,10 @@ import './style.css';
 import inboxIcon from './assets/images/inbox-icon.svg';
 import tcalIcon from './assets/images/today-icon.svg';
 import ucalIcon from './assets/images/upcoming-icon.svg';
-import { displayProject, hideProjectForm, showProjectForm, showTaskForm, hideTaskForm, displayTask, displayProjectTasks} from './display';
+import { displayProject, hideProjectForm, showProjectForm, showTaskForm, hideTaskForm, displayTask, displayProjectTasks, displayInbox} from './display';
 import { getProjectTitle, createProject, createProjectListener } from './projects';
 import { getTask } from './todos';
-import { getCurrentProject, setCurrentProject, addProject } from './state';
+import { getCurrentProject, setCurrentProject, addProject} from './state';
 
 let newProject;
 let newprojectTitle;
@@ -18,11 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectForm =  document.querySelector('.project-form');
 
     //create inbox (default project)
-    const inbox = createProject();
-    setCurrentProject(inbox);
+   const inbox = createProject('Inbox');
+   addProject(inbox);
+    displayInbox(inbox);
 
     inboxBtn.addEventListener('click', () => {
-        displayProjectTasks(inbox); 
+        displayInbox(inbox); 
     });
 
     // show task form on click
@@ -83,11 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // get current project
         currentProject = getCurrentProject();
 
+
         // add task to current project's task array
         if (currentProject) {
 
             currentProject.addTask(task);
-            inbox.addTask(task);
         }
 
         hideTaskForm();
