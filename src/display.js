@@ -3,7 +3,7 @@ import flagIcon from './assets/images/flag.svg';
 import trashIcon from './assets/images/trash.svg';
 import plusIcon from './assets/images/plus-icon.svg';
 import inboxIcon from './assets/images/inbox-icon.svg';
-import { setCurrentProject, getCurrentProject, getAllProjects } from './state';
+import { setCurrentProject, getCurrentProject, getAllProjects, findProjectByID } from './state';
 import { editTask, removeTask } from './projects';
 
 const tasksContainer = document.querySelector('.tasks-container');
@@ -88,6 +88,8 @@ function createElement(tag, attrs, content) {
     return el
 }
 
+
+// Utilty function to create a button
 function createButton(className, iconSrc, text, onCLick) {
     const button = document.createElement('button');
     button.className = className;
@@ -111,10 +113,16 @@ function createButton(className, iconSrc, text, onCLick) {
 
 //Remove task from display
 
-function deleteTask (task) {
+function deleteTask(task) {
 
     const taskID = task.id;
-    const project = getCurrentProject();
+    const currentProject = getCurrentProject();
+
+    if ( currentProject.title === "Inbox") {
+
+        deleteFromSourceProject( task.projectID, taskID );
+    }
+
 
     removeTask(project, taskID);
 
@@ -122,6 +130,17 @@ function deleteTask (task) {
 
 
     tasksContainer.removeChild(removedTask);
+
+}
+
+// Remove task from source project
+
+function deleteFromSourceProject(projectID, taskID) {
+
+   const sourceProject = findProjectByID(projectID);
+
+   removeTask( sourceProject, taskID );
+
 
 }
 
@@ -311,14 +330,9 @@ export function updateTaskDisplay(task, taskID) {
 export function displayInbox(inbox){
 
     emptyTasks();
-
     const projectTitle = inbox.title;
-
     projectHeader.textContent = projectTitle;
-
     setCurrentProject(inbox);
-
-
     const allProjects = getAllProjects();
 
     allProjects.forEach(project => {
@@ -333,9 +347,6 @@ export function displayInbox(inbox){
             });
 
         }
-
-
-  
 
     });
 }

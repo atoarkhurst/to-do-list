@@ -1,7 +1,7 @@
 let projects = [];
 let currentProject; 
 
-export function addProject(project){
+export function addProject( project ){
 
     projects.push(project);
 
@@ -10,14 +10,11 @@ export function addProject(project){
 
 export function getCurrentProject(){
 
-    console.log(currentProject);
-    console.log(projects);
-
     return currentProject
 }
 
 
-export function setCurrentProject(project){
+export function setCurrentProject( project ){
 
     if (project) {
         currentProject = project;
@@ -25,8 +22,12 @@ export function setCurrentProject(project){
     
 }
 
-//Find and return project using ID
 export function getAllProjects(){
 
     return projects;
+}
+
+export function findProjectByID( projectID ) {
+
+    return projects.find( project => project.id === projectID );
 }

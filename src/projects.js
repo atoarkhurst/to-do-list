@@ -58,11 +58,7 @@ export function editTask (taskID) {
     if (priority) {
         task.priority = priority;
     }
-
-
-    console.log(task);
-
-
+    
     updateTaskDisplay(task, taskID); 
 
 }

@@ -10,6 +10,7 @@ import { getCurrentProject, setCurrentProject, addProject} from './state';
 let newProject;
 let newprojectTitle;
 let currentProject;
+let currentProjectID;
 const inboxBtn = document.querySelector('.inbox-btn');
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -75,14 +76,18 @@ document.addEventListener('DOMContentLoaded', () => {
     createTaskForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
+         // get current project
+         currentProject = getCurrentProject();
+
+         currentProjectID = currentProject.id;
+
         // gets new task from form
-        const task = getTask();
+        const task = getTask(currentProjectID);
 
         // display task
         displayTask(task);
 
-        // get current project
-        currentProject = getCurrentProject();
+       
 
 
         // add task to current project's task array
