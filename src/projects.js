@@ -1,7 +1,6 @@
 import { displayProjectTasks, updateTaskDisplay } from "./display";
 import { getCurrentProject } from "./state";
 
-
 export function getProjectTitle(){
 
     let title = document.querySelector('#project-title').value; 
@@ -25,7 +24,6 @@ export function createProject(title){
 export function removeTask(project, taskID) {
     project.tasks = project.tasks.filter(task => task.id !== taskID);
 }
-
 
 export function editTask (taskID) {
 
