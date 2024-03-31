@@ -7,7 +7,6 @@ export function addProject( project ){
 
 }
 
-
 export function getCurrentProject(){
 
     return currentProject

@@ -39,13 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
        showProjectForm();
     });
 
-
     // load icon images
     const inboxIcons = document.querySelectorAll('.inbox-icon');
     inboxIcons.forEach(icon => icon.src = inboxIcon);
     document.querySelector('.tcal-icon').src = tcalIcon;
     document.querySelector('.ucal-icon').src = ucalIcon;
-
 
     // create new project when project form is submitted
     projectForm.addEventListener('submit', (e) => {
@@ -62,10 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         createProjectListener(projectBtn, newProject);
         
-
         // hide project form from view
         hideProjectForm();
-
 
         // add project to projects array
         addProject(newProject);
@@ -86,9 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // display task
         displayTask(task);
-
-       
-
 
         // add task to current project's task array
         if (currentProject) {
