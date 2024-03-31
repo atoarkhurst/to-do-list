@@ -1,78 +1,70 @@
 import editIcon from './assets/images/edit.svg';
-import flagIcon from './assets/images/flag.svg';
 import trashIcon from './assets/images/trash.svg';
-import plusIcon from './assets/images/plus-icon.svg';
 import inboxIcon from './assets/images/inbox-icon.svg';
 import { setCurrentProject, getCurrentProject, getAllProjects, findProjectByID } from './state';
 import { editTask, removeTask } from './projects';
 
-
-
-
-
+// DOM Elements
 const tasksContainer = document.querySelector('.tasks-container');
-const taskForm =  document.querySelector('.task-form');
 const projectForm = document.querySelector('.project-form');
 const projectsContainer = document.querySelector('.project-lists');
-
-
 const createModal = document.getElementById('create-modal');
 const editModal = document.getElementById('edit-modal');
 const overlay = document.querySelector('.overlay');
-
 const projectHeader = document.querySelector('.project-title');
 
-
+// Cancel Buttons and their event listeners
 const cancelAddTaskBtn = createModal.querySelector('.cancel-btn');
-
 cancelAddTaskBtn.addEventListener('click', hideTaskForm);
-
 const cancelEditTaskBtn = editModal.querySelector('.cancel-btn');
-
 cancelEditTaskBtn.addEventListener('click', hideEditForm);
 
-//add tasks to task list
+// Display tasks in the task list
 export function displayTask(task) {
-   
-   
+
     //Create task item container
     const taskItem = createElement('div', {className: 'task-item', id: task.id});
 
     // Create left and right sections 
     const taskItemLeft = createElement('div', {className: 'task-item-left'});
+
     const taskItemRight = createElement('div',{className: 'task-item-right'} );
 
-    //add left side contents
+    //add left side content
     const checkbox = createElement('input', {type: 'checkbox', class: 'task-check'});
+
     const taskName = createElement('span', {className: 'task-name', textContent: task.title});
 
     taskItemLeft.appendChild(checkbox);
+
     taskItemLeft.appendChild(taskName);
 
     //add right side content
     const dueDate = createElement('div', {className: 'due-date', textContent: task.dueDate});
+
     const taskBtns = createElement('div', {className: 'task-btns'});
 
      // Create and append Edit and Delete buttons
      const editBtn = createButton('edit-btn', editIcon, '', () => showEditForm(task));
+
      const deleteBtn = createButton('delete-btn', trashIcon, '', () => deleteTask(task));
      taskBtns.appendChild(editBtn);
+
      taskBtns.appendChild(deleteBtn);
- 
-
-    taskItemRight.appendChild(dueDate);
-    taskItemRight.appendChild(taskBtns);
-
-
+     
+     taskItemRight.appendChild(dueDate);
+     
+     taskItemRight.appendChild(taskBtns);
 
     // Append sections to taskItem
     taskItemRight.appendChild(taskBtns);
+
     taskItem.appendChild(taskItemLeft);
+
     taskItem.appendChild(taskItemRight);
 
     // Append taskItem to the container
     tasksContainer.appendChild(taskItem);
-
 }
 
 // Utility function to create elements with attribute and content
@@ -81,12 +73,15 @@ function createElement(tag, attrs, content) {
    const el = document.createElement(tag);
 
     for ( const attr in attrs ) {
+        
         el[attr] = attrs[attr]; 
+
     }
 
     if ( content ) {
 
         el.textContent = content;
+
     }
 
     return el
@@ -95,10 +90,13 @@ function createElement(tag, attrs, content) {
 
 // Utilty function to create a button
 function createButton(className, iconSrc, text, onCLick) {
+
     const button = document.createElement('button');
+
     button.className = className;
 
     if (iconSrc) {
+
         const icon = document.createElement('img');
         icon.src = iconSrc;
         icon.className = 'btn-icon';
@@ -106,8 +104,10 @@ function createButton(className, iconSrc, text, onCLick) {
     }
 
     if (text) {
+
         const buttonText = document.createTextNode(text);
         button.appendChild(buttonText);
+
       }
     
     button.addEventListener('click', onCLick);
@@ -116,23 +116,17 @@ function createButton(className, iconSrc, text, onCLick) {
 
 
 //Remove task from display
-
 function deleteTask(task) {
-
     const taskID = task.id;
     const currentProject = getCurrentProject();
 
     if ( currentProject.title === "Inbox") {
-
         deleteFromSourceProject( task.projectID, taskID );
     }
 
 
     removeTask(currentProject, taskID);
-
     const removedTask = document.getElementById(taskID);
-
-
     tasksContainer.removeChild(removedTask);
 
 }
@@ -142,7 +136,6 @@ function deleteTask(task) {
 function deleteFromSourceProject(projectID, taskID) {
 
    const sourceProject = findProjectByID(projectID);
-
    removeTask( sourceProject, taskID );
 
 
@@ -173,8 +166,6 @@ export function showEditForm(task){
         overlay.classList.remove('hidden');
 
         const submitBtn = document.getElementById('edit-task-btn');
-
-
 
         submitBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -211,17 +202,11 @@ export function displayProject(project){
     itemLabel.className = 'list-item-name';
     itemLabel.innerHTML = project.title;
 
-
     projectBtn.appendChild(itemContainer);
-
-
     itemContainer.appendChild(itemIcon);
     itemContainer.appendChild(itemLabel);
-
     projectListItem.appendChild(projectBtn);
-
     projectsContainer.appendChild(projectListItem);
-
 
     return projectBtn;
 }
@@ -236,7 +221,6 @@ export function displayProjectTasks(project) {
         projectHeader.textContent = projectTitle;
     }
     
-
     let tasks;
 
     emptyTasks();
@@ -246,8 +230,6 @@ export function displayProjectTasks(project) {
     if (project.tasks) {
          tasks = project.tasks;
     }
-   
-
 
     if (tasks) {
 
@@ -262,9 +244,6 @@ export function emptyTasks(){
 
     tasksContainer.innerHTML = '';
 }
-
-
-
 
 export function showTaskForm () {
 
@@ -315,7 +294,6 @@ export function hideProjectForm(){
 
 export function updateTaskDisplay(task, taskID) {
 
-
     hideEditForm();
 
     const taskItem = document.getElementById(taskID);
@@ -325,12 +303,9 @@ export function updateTaskDisplay(task, taskID) {
 
     taskName.textContent = task.title;
     taskDate.textContent = task.dueDate;
-
-
 }
 
 //Display all tasks in inbox
-
 export function displayInbox(inbox){
 
     emptyTasks();
@@ -349,8 +324,6 @@ export function displayInbox(inbox){
 
                 displayTask(task);
             });
-
         }
-
     });
 }
