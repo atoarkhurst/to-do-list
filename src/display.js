@@ -124,7 +124,6 @@ function deleteTask(task) {
         deleteFromSourceProject( task.projectID, taskID );
     }
 
-
     removeTask(currentProject, taskID);
     const removedTask = document.getElementById(taskID);
     tasksContainer.removeChild(removedTask);
@@ -141,10 +140,8 @@ function deleteFromSourceProject(projectID, taskID) {
 
 }
 
-
 // Display edit form 
 export function showEditForm(task){
-
 
     if (editModal) {
     
@@ -255,7 +252,6 @@ export function showTaskForm () {
     }
 
 }
-
 
 export function hideTaskForm () {
 
