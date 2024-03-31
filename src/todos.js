@@ -1,4 +1,4 @@
-import { displayTask } from "./display";
+import { format } from "date-fns";
 
 export function getTask( currentProjectID ) {
     
@@ -7,7 +7,9 @@ export function getTask( currentProjectID ) {
     let dueDate = document.querySelector('#due-date').value;
     let priority = document.querySelector('#todo-priority').value;
 
-    let todo = createTask(title, description, dueDate, priority, currentProjectID);
+    let formattedDate = format(new Date(dueDate), 'PP' );
+
+    let todo = createTask(title, description, formattedDate, priority, currentProjectID);
 
     return todo;
 

@@ -6,6 +6,10 @@ import inboxIcon from './assets/images/inbox-icon.svg';
 import { setCurrentProject, getCurrentProject, getAllProjects, findProjectByID } from './state';
 import { editTask, removeTask } from './projects';
 
+
+
+
+
 const tasksContainer = document.querySelector('.tasks-container');
 const taskForm =  document.querySelector('.task-form');
 const projectForm = document.querySelector('.project-form');
@@ -124,7 +128,7 @@ function deleteTask(task) {
     }
 
 
-    removeTask(project, taskID);
+    removeTask(currentProject, taskID);
 
     const removedTask = document.getElementById(taskID);
 
