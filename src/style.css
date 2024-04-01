@@ -110,6 +110,7 @@ main {
 
 .tasks-container {
     margin-top: 4rem;
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -122,6 +123,8 @@ main {
 .task-item {
     display: flex;
     justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: solid 1px #eee;
 }
 
 .todo-checkbox {
@@ -131,7 +134,7 @@ main {
 
 }
 
-.task-item-right {
+.task-item-right, .task-item-left {
     display: flex;
     align-items: center;
     gap: 1rem;
