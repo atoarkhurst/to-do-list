@@ -5,7 +5,7 @@ import ucalIcon from './assets/images/upcoming-icon.svg';
 import { displayProject, hideProjectForm, showProjectForm, showTaskForm, hideTaskForm, displayTask, displayProjectTasks, displayInbox} from './display';
 import { getProjectTitle, createProject, createProjectListener } from './projects';
 import { getTask } from './todos';
-import { getCurrentProject, setCurrentProject, addProject} from './state';
+import { getCurrentProject, addProject, loadProjects } from './state';
 
 let newProject;
 let newprojectTitle;
@@ -21,7 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
     //create inbox (default project)
    const inbox = createProject('Inbox');
    addProject(inbox);
-    displayInbox(inbox);
+   displayInbox(inbox);
+
+   // Test whether storage has been populated
+
+   if ( localStorage.getItem("projects") ) {
+
+        loadProjects();
+
+   }
 
     inboxBtn.addEventListener('click', () => {
         displayInbox(inbox); 
