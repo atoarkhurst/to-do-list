@@ -1,64 +1,70 @@
 import editIcon from './assets/images/edit.svg';
-import flagIcon from './assets/images/flag.svg';
 import trashIcon from './assets/images/trash.svg';
-import plusIcon from './assets/images/plus-icon.svg';
 import inboxIcon from './assets/images/inbox-icon.svg';
-import { setCurrentProject, getCurrentProject } from './state';
+import { setCurrentProject, getCurrentProject, getAllProjects, findProjectByID } from './state';
 import { editTask, removeTask } from './projects';
 
+// DOM Elements
 const tasksContainer = document.querySelector('.tasks-container');
-
-const taskForm =  document.querySelector('.task-form');
-
-const projectFrom = document.querySelector('.project-form');
-
+const projectForm = document.querySelector('.project-form');
 const projectsContainer = document.querySelector('.project-lists');
+const createModal = document.getElementById('create-modal');
+const editModal = document.getElementById('edit-modal');
+const overlay = document.querySelector('.overlay');
+const projectHeader = document.querySelector('.project-title');
 
+// Cancel Buttons and their event listeners
+const cancelAddTaskBtn = createModal.querySelector('.cancel-btn');
+cancelAddTaskBtn.addEventListener('click', hideTaskForm);
+const cancelEditTaskBtn = editModal.querySelector('.cancel-btn');
+cancelEditTaskBtn.addEventListener('click', hideEditForm);
 
-
-//add tasks to task list
+// Display tasks in the task list
 export function displayTask(task) {
-   
+
     //Create task item container
     const taskItem = createElement('div', {className: 'task-item', id: task.id});
 
     // Create left and right sections 
     const taskItemLeft = createElement('div', {className: 'task-item-left'});
+
     const taskItemRight = createElement('div',{className: 'task-item-right'} );
 
-    //add left side contents
+    //add left side content
     const checkbox = createElement('input', {type: 'checkbox', class: 'task-check'});
+
     const taskName = createElement('span', {className: 'task-name', textContent: task.title});
 
     taskItemLeft.appendChild(checkbox);
+
     taskItemLeft.appendChild(taskName);
 
     //add right side content
     const dueDate = createElement('div', {className: 'due-date', textContent: task.dueDate});
+
     const taskBtns = createElement('div', {className: 'task-btns'});
 
-    const project = getCurrentProject();
-
      // Create and append Edit and Delete buttons
-     const editBtn = createButton('edit-btn', editIcon, '', () => displayEditForm(task));
+     const editBtn = createButton('edit-btn', editIcon, '', () => showEditForm(task));
+
      const deleteBtn = createButton('delete-btn', trashIcon, '', () => deleteTask(task));
      taskBtns.appendChild(editBtn);
+
      taskBtns.appendChild(deleteBtn);
- 
-
-    taskItemRight.appendChild(dueDate);
-    taskItemRight.appendChild(taskBtns);
-
-
+     
+     taskItemRight.appendChild(dueDate);
+     
+     taskItemRight.appendChild(taskBtns);
 
     // Append sections to taskItem
     taskItemRight.appendChild(taskBtns);
+
     taskItem.appendChild(taskItemLeft);
+
     taskItem.appendChild(taskItemRight);
 
     // Append taskItem to the container
     tasksContainer.appendChild(taskItem);
-
 }
 
 // Utility function to create elements with attribute and content
@@ -67,22 +73,30 @@ function createElement(tag, attrs, content) {
    const el = document.createElement(tag);
 
     for ( const attr in attrs ) {
+        
         el[attr] = attrs[attr]; 
+
     }
 
     if ( content ) {
 
         el.textContent = content;
+
     }
 
     return el
 }
 
+
+// Utilty function to create a button
 function createButton(className, iconSrc, text, onCLick) {
+
     const button = document.createElement('button');
+
     button.className = className;
 
     if (iconSrc) {
+
         const icon = document.createElement('img');
         icon.src = iconSrc;
         icon.className = 'btn-icon';
@@ -90,143 +104,81 @@ function createButton(className, iconSrc, text, onCLick) {
     }
 
     if (text) {
+
         const buttonText = document.createTextNode(text);
         button.appendChild(buttonText);
+
       }
     
     button.addEventListener('click', onCLick);
     return button;
 }
 
-//Create edit form fields
-function createInputWithLabel({id, type, placeholder, value, labelText} ) {
-
-    const label = document.createElement('label');
-    label.htmlFor = id;
-    label.textContent = labelText; 
-    label.className = 'visually-hidden';
-
-    const input = document.createElement('input');
-    input.type = type;
-    input.id = id;
-    input.name = id;
-    input.placeholder = placeholder;
-    if (value) input.value = value; 
-
-    return { label, input };
-}
-
 
 //Remove task from display
-
-function deleteTask (task) {
-
+function deleteTask(task) {
     const taskID = task.id;
-    const project = getCurrentProject();
+    const currentProject = getCurrentProject();
 
-    removedTask(project, taskID);
+    if ( currentProject.title === "Inbox") {
+        deleteFromSourceProject( task.projectID, taskID );
+    }
 
-    const removedTask = getElementById(taskID);
-
-
+    removeTask(currentProject, taskID);
+    const removedTask = document.getElementById(taskID);
     tasksContainer.removeChild(removedTask);
 
 }
 
+// Remove task from source project
+
+function deleteFromSourceProject(projectID, taskID) {
+
+   const sourceProject = findProjectByID(projectID);
+   removeTask( sourceProject, taskID );
+
+
+}
 
 // Display edit form 
-export function displayEditForm(task){
+export function showEditForm(task){
 
-
-    const container = document.body; 
-
-    const taskItem = document.getElementById(task.id);
-
-    const editModal = document.createElement('div');
-    editModal.className = 'edit-modal';
-
-
-
-    const taskForm = document.createElement('form');
-
-    const project = getCurrentProject();
-
-    const taskID = task.id;
-
+    if (editModal) {
     
+        const taskID = task.id;
 
-    const { label: titleLabel, input: titleInput } = createInputWithLabel({
-        id: 'todo-title',
-        type: 'text',
-        placeholder: 'Title: Studying',
-        value: task.title,
-        labelText: 'Title'
-    })
+        const title = document.getElementById('edit-title');
+        title.value = task.title;
 
-    taskForm.appendChild(titleLabel);
-    taskForm.appendChild(titleInput);
+        const descr = document.getElementById('edit-descr');
+        descr.value = task.description;
 
-   const { label: descrLabel, input: descrInput } = createInputWithLabel({
-        id: 'todo-descr',
-        type: 'text',
-        placeholder: 'Description: Find Quiet place, open book, and read.',
-        value: task.description,
-        labelText: 'Description'
-   })
+        const date = document.getElementById('edit-due-date');
+        date.value = task.dueDate;
 
-   taskForm.appendChild(descrLabel);
-   taskForm.appendChild(descrInput);
+        const priority = document.getElementById('edit-priority');
+        priority.value = task.priority;
 
-   const { label: dateLabel, input: dateInput } = createInputWithLabel({
-        id: 'due-date',
-        type: 'date',
-        value: task.dueDate,
-        labelText: 'Due Date'
-    })
+        editModal.classList.remove('hidden');
+        overlay.classList.remove('hidden');
 
+        const submitBtn = document.getElementById('edit-task-btn');
 
-    taskForm.appendChild(dateLabel);
-    taskForm.appendChild(dateInput);
+        submitBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            editTask(taskID);
+        });
+    }
+}
 
-    const prioritySelect = document.createElement('select');
+// Hide edit form 
+export function hideEditForm(){
 
+    if (editModal) {
 
-
-    const priorities = ["low", 'medium', 'high'];
-    priorities.forEach((priority) => {
-        const option = document.createElement('option');
-        option.value = priority;
-        option.textContent = priority.charAt(0).toUpperCase() + priority.slice(1); // Capitalize the first letter
-        if (task.priority === priority) {
-            option.selected = true;
-        }
-        prioritySelect.appendChild(option);
-    });
-
-    const submitBtn = document.createElement('button');
-
-    submitBtn.textContent = 'Update';
-
-    submitBtn.className = 'edit-submit-btn';
-
-    submitBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        editTask(project, taskID, titleInput.value, descrInput.value, dateInput.value, priorities.value );
-
-    });
-
-    taskForm.appendChild(prioritySelect);
-    taskForm.className = 'edit-form';
-    taskForm.style.display = 'flex';
-
-
-    taskForm.appendChild(submitBtn);
-
-    editModal.appendChild(taskForm);
-
-    container.appendChild(editModal);
-
-
+        editModal.classList.add('hidden');
+        overlay.classList.add('hidden');
+    }
 }
 
 
@@ -247,23 +199,25 @@ export function displayProject(project){
     itemLabel.className = 'list-item-name';
     itemLabel.innerHTML = project.title;
 
-
     projectBtn.appendChild(itemContainer);
-
-
     itemContainer.appendChild(itemIcon);
     itemContainer.appendChild(itemLabel);
-
     projectListItem.appendChild(projectBtn);
-
     projectsContainer.appendChild(projectListItem);
-
 
     return projectBtn;
 }
 
-export function displyProjectTasks(project) {
+export function displayProjectTasks(project) {
 
+    const projectTitle = project.title;
+
+    projectHeader.textContent = projectTitle;
+
+    if ( projectHeader !== project.title ) {
+        projectHeader.textContent = projectTitle;
+    }
+    
     let tasks;
 
     emptyTasks();
@@ -273,8 +227,6 @@ export function displyProjectTasks(project) {
     if (project.tasks) {
          tasks = project.tasks;
     }
-   
-
 
     if (tasks) {
 
@@ -290,32 +242,35 @@ export function emptyTasks(){
     tasksContainer.innerHTML = '';
 }
 
-
-
-
 export function showTaskForm () {
-    if (taskForm) {
-        taskForm.style.display = 'flex';
+
+    if (createModal) {
+        createModal.classList.remove('hidden');
+        overlay.classList.remove('hidden');
     } else {
         console.error("Task form element not found");
     }
 
 }
 
-
 export function hideTaskForm () {
-    if (taskForm) {
-        taskForm.style.display = 'none';
+
+    if (createModal) {
+        createModal.classList.add('hidden');
+        overlay.classList.add('hidden');
     } else {
         console.error("Task form element not found");
     }
 
+    const createForm = createModal.querySelector('.create-task-form');
+
+    createForm.reset();
 }
 
 export function showProjectForm(){
 
-    if (projectFrom) {
-        projectFrom.style.display = 'flex';
+    if (projectForm) {
+        projectForm.classList.remove('hidden');
     } else {
         console.error("Project form element not found");
     }
@@ -323,9 +278,11 @@ export function showProjectForm(){
 }
 
 export function hideProjectForm(){
+
+    projectForm.reset();
     
-    if (projectFrom) {
-        projectFrom.style.display = 'none';
+    if (projectForm) {
+        projectForm.classList.add('hidden');
     } else {
         console.error("Project form element not found");
     }
@@ -333,10 +290,7 @@ export function hideProjectForm(){
 
 export function updateTaskDisplay(task, taskID) {
 
-
-    const editModal = document.querySelector('.edit-modal');
-
-    editModal.style.display = 'none';
+    hideEditForm();
 
     const taskItem = document.getElementById(taskID);
 
@@ -345,12 +299,27 @@ export function updateTaskDisplay(task, taskID) {
 
     taskName.textContent = task.title;
     taskDate.textContent = task.dueDate;
-
-
-
-
-
-
-
 }
 
+//Display all tasks in inbox
+export function displayInbox(inbox){
+
+    emptyTasks();
+    const projectTitle = inbox.title;
+    projectHeader.textContent = projectTitle;
+    setCurrentProject(inbox);
+    const allProjects = getAllProjects();
+
+    allProjects.forEach(project => {
+
+        if (project.tasks) {
+
+            const tasks = project.tasks;
+           
+            tasks.forEach(task => {
+
+                displayTask(task);
+            });
+        }
+    });
+}

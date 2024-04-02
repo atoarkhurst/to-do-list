@@ -2,23 +2,41 @@ import './style.css';
 import inboxIcon from './assets/images/inbox-icon.svg';
 import tcalIcon from './assets/images/today-icon.svg';
 import ucalIcon from './assets/images/upcoming-icon.svg';
-import { displayProject, hideProjectForm, showProjectForm, showTaskForm, hideTaskForm, displayTask} from './display';
+import { displayProject, hideProjectForm, showProjectForm, showTaskForm, hideTaskForm, displayTask, displayProjectTasks, displayInbox} from './display';
 import { getProjectTitle, createProject, createProjectListener } from './projects';
 import { getTask } from './todos';
-import { getCurrentProject, setCurrentProject, addProject } from './state';
+import { getCurrentProject, addProject, loadProjects, populateStorage } from './state';
 
 let newProject;
 let newprojectTitle;
 let currentProject;
+let currentProjectID;
+const inboxBtn = document.querySelector('.inbox-btn');
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const taskForm =  document.querySelector('.task-form');
+    const createTaskForm =  document.querySelector('.create-task-form');
     const projectForm =  document.querySelector('.project-form');
 
     //create inbox (default project)
-    const inbox = createProject();
-    setCurrentProject(inbox);
+   const inbox = createProject('Inbox');
+   addProject(inbox);
+   displayInbox(inbox);
+
+   // Test whether storage has been populated
+
+   if ( localStorage.getItem("savedProjects") ) {
+
+        loadProjects();
+
+   } else {
+
+        populateStorage();
+   }
+
+    inboxBtn.addEventListener('click', () => {
+        displayInbox(inbox); 
+    });
 
     // show task form on click
     const createTaskBtn = document.querySelector('.create-task-btn');
@@ -32,13 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
        showProjectForm();
     });
 
-
     // load icon images
     const inboxIcons = document.querySelectorAll('.inbox-icon');
     inboxIcons.forEach(icon => icon.src = inboxIcon);
     document.querySelector('.tcal-icon').src = tcalIcon;
     document.querySelector('.ucal-icon').src = ucalIcon;
-
 
     // create new project when project form is submitted
     projectForm.addEventListener('submit', (e) => {
@@ -55,10 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         createProjectListener(projectBtn, newProject);
         
-
         // hide project form from view
         hideProjectForm();
-
 
         // add project to projects array
         addProject(newProject);
@@ -66,22 +80,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // create new task when task form is submitted
-    taskForm.addEventListener('submit', (e) => {
+    createTaskForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
+         // get current project
+         currentProject = getCurrentProject();
+
+         currentProjectID = currentProject.id;
+
         // gets new task from form
-        const task = getTask();
+        const task = getTask(currentProjectID);
 
         // display task
         displayTask(task);
-
-        // get current project
-        currentProject = getCurrentProject();
 
         // add task to current project's task array
         if (currentProject) {
 
             currentProject.addTask(task);
+            populateStorage();
         }
 
         hideTaskForm();
