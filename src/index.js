@@ -5,7 +5,7 @@ import ucalIcon from './assets/images/upcoming-icon.svg';
 import { displayProject, hideProjectForm, showProjectForm, showTaskForm, hideTaskForm, displayTask, displayProjectTasks, displayInbox} from './display';
 import { getProjectTitle, createProject, createProjectListener } from './projects';
 import { getTask } from './todos';
-import { getCurrentProject, addProject, loadProjects } from './state';
+import { getCurrentProject, addProject, loadProjects, populateStorage } from './state';
 
 let newProject;
 let newprojectTitle;
@@ -25,10 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
    // Test whether storage has been populated
 
-   if ( localStorage.getItem("projects") ) {
+   if ( localStorage.getItem("savedProjects") ) {
 
         loadProjects();
 
+   } else {
+
+        populateStorage();
    }
 
     inboxBtn.addEventListener('click', () => {
@@ -95,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentProject) {
 
             currentProject.addTask(task);
+            populateStorage();
         }
 
         hideTaskForm();

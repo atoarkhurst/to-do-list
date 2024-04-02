@@ -1,10 +1,11 @@
 let projects = [];
 let currentProject; 
-let entries; 
 
 export function addProject( project ){
 
     projects.push(project);
+
+    addProjectToStorage(project);
 
 }
 
@@ -31,12 +32,35 @@ export function findProjectByID( projectID ) {
     return projects.find( project => project.id === projectID );
 }
 
-function addProject() {
 
+export function loadProjects() {
 
+    let projects_deserialized = JSON.parse(localStorage.getItem("savedProjects"));
+
+    console.log(projects_deserialized);
 
 }
 
-export function loadProjects() {
+export function populateStorage() {
+
+    let projects_serialized = JSON.stringify(projects);
+
+    localStorage.setItem('savedProjects', projects_serialized);
+
+  
+    
+}
+
+export function addProjectToStorage(project) {
+
+    let projects_deserialized = JSON.parse(localStorage.getItem("savedProjects"));
+
+    projects_deserialized.push(project);
+
+    let projects_serialized = JSON.stringify(projects_deserialized);
+
+    localStorage.setItem('savedProjects', projects_serialized);
+
+   
 
 }
