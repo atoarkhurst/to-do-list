@@ -205,7 +205,7 @@ export function displayProject(project){
     projectListItem.appendChild(projectBtn);
     projectsContainer.appendChild(projectListItem);
 
-    return projectBtn;
+    projectBtn.addEventListener('click', () => displayProjectTasks(project));
 }
 
 export function displayProjectTasks(project) {
@@ -321,5 +321,15 @@ export function displayInbox(inbox){
                 displayTask(task);
             });
         }
+    });
+}
+
+// Display all of the loaded projects
+export function displayLoadedProjects () {
+    
+    const projects = getAllProjects();
+
+    projects.forEach((project) => {
+        displayProject(project);
     });
 }

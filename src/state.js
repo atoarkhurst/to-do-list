@@ -1,11 +1,11 @@
+
+
 let projects = [];
 let currentProject; 
 
 export function addProject( project ){
 
     projects.push(project);
-
-    addProjectToStorage(project);
 
 }
 
@@ -32,35 +32,55 @@ export function findProjectByID( projectID ) {
     return projects.find( project => project.id === projectID );
 }
 
+export function populateStorage() {
+
+    let projects_serialized = JSON.stringify( projects );
+
+    localStorage.setItem( 'savedProjects', projects_serialized );
+
+}
 
 export function loadProjects() {
 
+    //Get projects from local storage 
     let projects_deserialized = JSON.parse(localStorage.getItem("savedProjects"));
 
-    console.log(projects_deserialized);
+    projects = projects_deserialized;
+}
+
+export function loadDefaultProject(){
+
+    let default_project_deserialized = JSON.parse( localStorage.getItem( "defaultProject") );
+
+    return default_project_deserialized;
+}
+
+export function saveDefaultProject( defaultProject ) {
+
+    let default_project_serialized = JSON.stringify( defaultProject );
+
+    localStorage.setItem( 'defaultProject', default_project_serialized);
 
 }
 
-export function populateStorage() {
+export function saveProject( project ) {
 
-    let projects_serialized = JSON.stringify(projects);
+    // Retrieve existing projects from local storage or initialize an empty array if none found
+    let projects_deserialized = JSON.parse( localStorage.getItem( "savedProjects" )) || [];
 
-    localStorage.setItem('savedProjects', projects_serialized);
+    // Prepare a plain object version of the project that does not include methods
+    const projectData = {
+        id: project.id,
+        title: project.title,
+        tasks: project.tasks 
+    };
 
-  
-    
-}
-
-export function addProjectToStorage(project) {
-
-    let projects_deserialized = JSON.parse(localStorage.getItem("savedProjects"));
-
-    projects_deserialized.push(project);
+    projects_deserialized.push( projectData );
 
     let projects_serialized = JSON.stringify(projects_deserialized);
 
-    localStorage.setItem('savedProjects', projects_serialized);
-
-   
+    localStorage.setItem( 'savedProjects', projects_serialized );
 
 }
+
+

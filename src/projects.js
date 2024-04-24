@@ -7,18 +7,19 @@ export function getProjectTitle(){
     return title;
 }
 
-export function createProject(title){
+export function createProject(title, existingData) {
 
-    return {
-
+       const project =  existingData || {
         id: Date.now(), // Create unique id for each project
         title,
         tasks: [],
-        addTask(task) {
-            this.tasks.push(task);
-        }
-
     };
+
+    project.addTask = function(task) {
+        this.tasks.push(task);
+    };
+    
+    return project;
 }
 
 export function removeTask(project, taskID) {
@@ -61,8 +62,8 @@ export function editTask (taskID) {
 
 }
 
-export function createProjectListener(projectBtn, project){
+// export function createProjectListener(projectBtn, project){
 
-    projectBtn.addEventListener('click', () => displayProjectTasks(project));
-}
+//     projectBtn.addEventListener('click', () => displayProjectTasks(project));
+// }
 
