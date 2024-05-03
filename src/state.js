@@ -1,7 +1,8 @@
-
+import { createProject } from "./projects";
 
 let projects = [];
 let currentProject; 
+let defaultProject;
 
 export function addProject( project ){
 
@@ -16,10 +17,17 @@ export function getCurrentProject(){
 
 export function setCurrentProject( project ){
 
-    if (project) {
+    if ( project ) {
+        
         currentProject = project;
     }
     
+}
+
+export function getDefaultProject() {
+
+    return defaultProject;
+
 }
 
 export function getAllProjects(){
@@ -29,7 +37,31 @@ export function getAllProjects(){
 
 export function findProjectByID( projectID ) {
 
-    return projects.find( project => project.id === projectID );
+    console.log(projectID);
+
+    const foundProject = projects.find( project => project.id === projectID );
+
+    console.log(foundProject);
+
+    return foundProject;
+}
+
+export function addToInbox(task) {
+    
+    if ( currentProject.id != defaultProject.id ) {
+
+        const inbox = projects.find((project) => project.id = defaultProject.id);
+
+        inbox.addTask(task);
+
+    }
+}
+
+export function deleteFromInbox(task) {
+
+    const inbox = projects.find((project) => project.id = defaultProject.id);
+
+    inbox.deleteTask(task);
 }
 
 export function populateStorage() {
@@ -43,21 +75,30 @@ export function populateStorage() {
 export function loadProjects() {
 
     //Get projects from local storage 
-    let projects_deserialized = JSON.parse(localStorage.getItem("savedProjects"));
+    const projectsData = JSON.parse(localStorage.getItem("savedProjects")) || [] ;
 
-    projects = projects_deserialized;
+    const updatedProjectData = projectsData.map((projectData => createProject(projectData.title, projectData)));
+
+    projects = updatedProjectData;
+
+    return updatedProjectData;
+
 }
 
 export function loadDefaultProject(){
 
     let default_project_deserialized = JSON.parse( localStorage.getItem( "defaultProject") );
 
-    return default_project_deserialized;
+    defaultProject = projects.find( project => project.id === default_project_deserialized.id );
+
+    return defaultProject;
 }
 
-export function saveDefaultProject( defaultProject ) {
+export function saveDefaultProject( project ) {
 
-    let default_project_serialized = JSON.stringify( defaultProject );
+    let default_project_serialized = JSON.stringify( project ) || [];
+
+    defaultProject = project;
 
     localStorage.setItem( 'defaultProject', default_project_serialized);
 
@@ -74,12 +115,33 @@ export function saveProject( project ) {
         title: project.title,
         tasks: project.tasks 
     };
-
+    
+     // Add the cleaned project object to the array
     projects_deserialized.push( projectData );
 
+     // Serialize the updated array of projects
     let projects_serialized = JSON.stringify(projects_deserialized);
 
+    // Save the serialized string back to local storage
     localStorage.setItem( 'savedProjects', projects_serialized );
+
+}
+
+export function deleteProjectFromStorage( project ) {
+
+     // Retrieve existing projects from local storage or initialize an empty array if none found
+     let projects_deserialized = JSON.parse( localStorage.getItem( "savedProjects" )) || [];
+
+     const projectID = project.id;
+
+     projects_deserialized = projects_deserialized.filter( project => project.id !== projectID );
+
+
+      // Serialize the updated array of projects
+    let projects_serialized = JSON.stringify(projects_deserialized);
+
+     // Save the serialized string back to local storage
+     localStorage.setItem( 'savedProjects', projects_serialized );
 
 }
 

@@ -1,20 +1,20 @@
 import './style.css';
 import inboxIcon from './assets/images/inbox-icon.svg';
 import tcalIcon from './assets/images/today-icon.svg';
-import ucalIcon from './assets/images/upcoming-icon.svg';
 import { displayProject, hideProjectForm, showProjectForm, showTaskForm, hideTaskForm, displayTask, displayProjectTasks, displayLoadedProjects} from './display';
-import { getProjectTitle, createProject, createProjectListener,  } from './projects';
+import { getProjectTitle, createProject } from './projects';
 import { getTask } from './todos';
-import { getCurrentProject, addProject, loadProjects, populateStorage, saveDefaultProject, loadDefaultProject, saveProject, getAllProjects } from './state';
+import { getCurrentProject, addProject, loadProjects, populateStorage, saveDefaultProject, loadDefaultProject, saveProject, addToInbox, setCurrentProject, getAllProjects } from './state';
 
 let newProject;
 let newprojectTitle;
 let currentProject;
 let currentProjectID;
+let loadedProjects;
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const createTaskForm =  document.querySelector('.create-task-form');
+    const createTaskForm =  document.querySelector('.task-form');
     const projectForm =  document.querySelector('.project-form');
 
     
@@ -23,24 +23,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
    if ( localStorage.getItem("savedProjects") ) {
 
-        loadProjects();
-        displayLoadedProjects();
+        loadedProjects = loadProjects();
         currentProject = loadDefaultProject();
+        displayLoadedProjects(loadedProjects);
         displayProjectTasks(currentProject);
 
-        let allProjects = getAllProjects();
-
-        console.log(allProjects);
 
    } else {
 
     //create inbox (default project)
-    const inbox = createProject('Inbox');
+    let inbox = createProject('Inbox');
     addProject( inbox );
-
+    saveProject( inbox );
     saveDefaultProject( inbox );
     populateStorage();
-    displayProject(inbox);
+    setCurrentProject(inbox);
+    currentProject = getCurrentProject();
+    displayProjectTasks(currentProject);
    }
 
     // show task form on click
@@ -59,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const inboxIcons = document.querySelectorAll('.inbox-icon');
     inboxIcons.forEach(icon => icon.src = inboxIcon);
     document.querySelector('.tcal-icon').src = tcalIcon;
-    document.querySelector('.ucal-icon').src = ucalIcon;
 
     // create new project when project form is submitted
     projectForm.addEventListener('submit', (e) => {
@@ -101,8 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // add task to current project's task array
         if (currentProject) {
-
             currentProject.addTask(task);
+            addToInbox(task);
             populateStorage();
         }
 

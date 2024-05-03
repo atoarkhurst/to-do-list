@@ -1,5 +1,5 @@
 import { displayProjectTasks, updateTaskDisplay } from "./display";
-import { getCurrentProject } from "./state";
+import { getCurrentProject, getAllProjects, deleteProjectFromStorage, getDefaultProject, populateStorage } from "./state";
 
 export function getProjectTitle(){
 
@@ -18,15 +18,40 @@ export function createProject(title, existingData) {
     project.addTask = function(task) {
         this.tasks.push(task);
     };
+
+    project.deleteTask = function(task) {
+        this.tasks = this.tasks.filter((todo) => todo.id !== task.id);
+    };
     
     return project;
 }
 
-export function removeTask(project, taskID) {
-    project.tasks = project.tasks.filter(task => task.id !== taskID);
-}
 
-export function editTask (taskID) {
+
+export function deleteProject(project) {
+
+    let projects = getAllProjects();
+
+    const inbox = getDefaultProject();
+
+    const projectID = project.id;
+
+    const projectTasks = project.tasks;
+
+    projectTasks.forEach(task => {
+
+        inbox.deleteTask(task);
+        
+    });
+
+    populateStorage();
+
+    projects = projects.filter( project => project.id !== projectID);
+
+    deleteProjectFromStorage(project);
+
+}
+export function editTask(taskID) {
 
     const title = document.getElementById('edit-title').value;
     const descr = document.getElementById('edit-descr').value;
@@ -62,8 +87,5 @@ export function editTask (taskID) {
 
 }
 
-// export function createProjectListener(projectBtn, project){
 
-//     projectBtn.addEventListener('click', () => displayProjectTasks(project));
-// }
 
