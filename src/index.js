@@ -17,8 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const createTaskForm =  document.querySelector('.task-form');
     const projectForm =  document.querySelector('.project-form');
 
-    
-
    // Test whether storage has been populated
 
    if ( localStorage.getItem("savedProjects") ) {

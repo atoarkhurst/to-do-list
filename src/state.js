@@ -37,11 +37,8 @@ export function getAllProjects(){
 
 export function findProjectByID( projectID ) {
 
-    console.log(projectID);
 
     const foundProject = projects.find( project => project.id === projectID );
-
-    console.log(foundProject);
 
     return foundProject;
 }
