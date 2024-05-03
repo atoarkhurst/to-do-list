@@ -72,10 +72,17 @@ aside ul {
     border-radius: 3px;
 }
 
+.project-list-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding: 2px 3px;
+}
+
 .list-item-btn {
     display: flex; /* Makes the button full width */
     width: 100%;
-    padding: 2px 3px;
     border: none;
     background-color: transparent;
     text-align: left;
@@ -90,7 +97,7 @@ aside ul {
   }
   
   
-  .list-item-btn:hover {
+  .project-list-item:hover {
     background-color: #f0f0f0; /* Example color */
   }
   
@@ -179,7 +186,6 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 0.4rem;
     width: 450px;
     padding: 1.3rem;
     min-height: 250px;
@@ -192,6 +198,13 @@ main {
     z-index: 2;
 
 }
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+}
+
 
 .modal select, .modal .submit-btn {
     align-self: start;

@@ -1,8 +1,8 @@
 import editIcon from './assets/images/edit.svg';
 import trashIcon from './assets/images/trash.svg';
 import inboxIcon from './assets/images/inbox-icon.svg';
-import { setCurrentProject, getCurrentProject, getAllProjects, findProjectByID } from './state';
-import { editTask, removeTask } from './projects';
+import { setCurrentProject, getCurrentProject, findProjectByID, populateStorage, getDefaultProject, deleteFromInbox } from './state';
+import { editTask, deleteProject } from './projects';
 
 // DOM Elements
 const tasksContainer = document.querySelector('.tasks-container');
@@ -12,6 +12,8 @@ const createModal = document.getElementById('create-modal');
 const editModal = document.getElementById('edit-modal');
 const overlay = document.querySelector('.overlay');
 const projectHeader = document.querySelector('.project-title');
+const inboxBtn = document.querySelector('.inbox-btn');
+inboxBtn.addEventListener('click', showInbox );
 
 // Cancel Buttons and their event listeners
 const cancelAddTaskBtn = createModal.querySelector('.cancel-btn');
@@ -21,6 +23,9 @@ cancelEditTaskBtn.addEventListener('click', hideEditForm);
 
 // Display tasks in the task list
 export function displayTask(task) {
+
+    const currentProject = getCurrentProject();
+    const inbox = getDefaultProject();
 
     //Create task item container
     const taskItem = createElement('div', {className: 'task-item', id: task.id});
@@ -47,7 +52,27 @@ export function displayTask(task) {
      // Create and append Edit and Delete buttons
      const editBtn = createButton('edit-btn', editIcon, '', () => showEditForm(task));
 
-     const deleteBtn = createButton('delete-btn', trashIcon, '', () => deleteTask(task));
+    
+     const deleteBtn = createButton('delete-btn', trashIcon, '', () => {
+         
+        deleteFromInbox(task);
+
+         if ( currentProject.id !== inbox.id ) {
+            deleteFromCurrentProject(currentProject, task);
+         }
+
+         if ( currentProject.id === inbox.id && currentProject.id !== task.projectID  ) {
+
+            const sourceProject = findProjectByID(task.projectID);
+
+            deleteFromSourceProject(sourceProject, task);
+         }
+
+         removeTaskFromDisplay(task);
+         populateStorage();
+        
+     } );
+
      taskBtns.appendChild(editBtn);
 
      taskBtns.appendChild(deleteBtn);
@@ -116,32 +141,41 @@ function createButton(className, iconSrc, text, onCLick) {
 
 
 //Remove task from display
-function deleteTask(task) {
+function removeTaskFromDisplay(task) {
+
     const taskID = task.id;
-    const currentProject = getCurrentProject();
-
-    if ( currentProject.title === "Inbox") {
-        deleteFromSourceProject( task.projectID, taskID );
-    }
-
-    removeTask(currentProject, taskID);
     const removedTask = document.getElementById(taskID);
     tasksContainer.removeChild(removedTask);
 
 }
 
+//Remove project from display
+function removeProjectFromDisplay(project) {
+
+    const projectID = project.id;
+
+    const removedProject = document.getElementById(projectID);
+
+    projectsContainer.removeChild(removedProject);
+
+}
+
+// Remove task from current project
+function deleteFromCurrentProject(project, task) {
+
+    project.deleteTask(task);
+}
+
 // Remove task from source project
+function deleteFromSourceProject(project, task) {
 
-function deleteFromSourceProject(projectID, taskID) {
-
-   const sourceProject = findProjectByID(projectID);
-   removeTask( sourceProject, taskID );
-
-
+    project.deleteTask(task);
 }
 
 // Display edit form 
 export function showEditForm(task){
+
+    
 
     if (editModal) {
     
@@ -186,26 +220,43 @@ export function hideEditForm(){
 //Display project on sidebar
 export function displayProject(project){
 
-    const projectListItem = document.createElement('li');
-    const projectBtn = document.createElement('button');
-    projectBtn.className = 'list-item-btn';
-    const itemContainer = document.createElement('div');
-    itemContainer.className = 'list-item-container';
-    const itemIcon = document.createElement('img');
-    itemIcon.classList.add('list-icon', 'inbox-icon');
-    itemIcon.src = inboxIcon;
 
-    const itemLabel = document.createElement('span');
-    itemLabel.className = 'list-item-name';
-    itemLabel.innerHTML = project.title;
+    let inbox = getDefaultProject();
 
-    projectBtn.appendChild(itemContainer);
-    itemContainer.appendChild(itemIcon);
-    itemContainer.appendChild(itemLabel);
-    projectListItem.appendChild(projectBtn);
-    projectsContainer.appendChild(projectListItem);
 
-    return projectBtn;
+    if  ( project.id !== inbox.id ) {
+
+        const projectListItem = createElement('li', {className: 'project-list-item', id: project.id});
+        const projectBtn = document.createElement('button');
+        projectBtn.className = 'list-item-btn';
+        const itemContainer = document.createElement('div');
+        itemContainer.className = 'list-item-container';
+        const itemIcon = document.createElement('img');
+        itemIcon.classList.add('list-icon', 'inbox-icon');
+        itemIcon.src = inboxIcon;
+    
+        const itemLabel = document.createElement('span');
+        itemLabel.className = 'list-item-name';
+        itemLabel.innerHTML = project.title;
+    
+        const deleteBtn = createButton('project-delete-btn', trashIcon, '', () => {
+    
+            deleteProject(project);
+            removeProjectFromDisplay(project);
+         } );
+    
+        projectBtn.appendChild(itemContainer);
+        itemContainer.appendChild(itemIcon);
+        itemContainer.appendChild(itemLabel);
+        projectListItem.appendChild(projectBtn);
+        projectListItem.appendChild(deleteBtn);
+        projectsContainer.appendChild(projectListItem);
+    
+        projectBtn.addEventListener('click', () => displayProjectTasks(project));
+
+    }
+
+   
 }
 
 export function displayProjectTasks(project) {
@@ -237,6 +288,17 @@ export function displayProjectTasks(project) {
 
 }
 
+function showInbox(){
+
+    let inbox = getDefaultProject();
+
+    const projectTitle =  inbox.title;
+
+    projectHeader.textContent = projectTitle;
+
+    displayProjectTasks(inbox);
+}
+
 export function emptyTasks(){
 
     tasksContainer.innerHTML = '';
@@ -262,7 +324,7 @@ export function hideTaskForm () {
         console.error("Task form element not found");
     }
 
-    const createForm = createModal.querySelector('.create-task-form');
+    const createForm = createModal.querySelector('.task-form');
 
     createForm.reset();
 }
@@ -301,25 +363,12 @@ export function updateTaskDisplay(task, taskID) {
     taskDate.textContent = task.dueDate;
 }
 
-//Display all tasks in inbox
-export function displayInbox(inbox){
 
-    emptyTasks();
-    const projectTitle = inbox.title;
-    projectHeader.textContent = projectTitle;
-    setCurrentProject(inbox);
-    const allProjects = getAllProjects();
+// Display all of the loaded projects
+export function displayLoadedProjects (projects) {
+    
 
-    allProjects.forEach(project => {
-
-        if (project.tasks) {
-
-            const tasks = project.tasks;
-           
-            tasks.forEach(task => {
-
-                displayTask(task);
-            });
-        }
+    projects.forEach((project) => {
+        displayProject(project);
     });
 }
