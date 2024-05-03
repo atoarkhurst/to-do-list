@@ -1,4 +1,4 @@
-import { displayProjectTasks, updateTaskDisplay } from "./display";
+import { updateTaskDisplay } from "./display";
 import { getCurrentProject, getAllProjects, deleteProjectFromStorage, getDefaultProject, populateStorage } from "./state";
 
 export function getProjectTitle(){

@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // load icon images
     const inboxIcons = document.querySelectorAll('.inbox-icon');
     inboxIcons.forEach(icon => icon.src = inboxIcon);
-    document.querySelector('.tcal-icon').src = tcalIcon;
+
 
     // create new project when project form is submitted
     projectForm.addEventListener('submit', (e) => {
