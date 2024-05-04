@@ -1,6 +1,5 @@
 import './style.css';
 import inboxIcon from './assets/images/inbox-icon.svg';
-import tcalIcon from './assets/images/today-icon.svg';
 import { displayProject, hideProjectForm, showProjectForm, showTaskForm, hideTaskForm, displayTask, displayProjectTasks, displayLoadedProjects} from './display';
 import { getProjectTitle, createProject } from './projects';
 import { getTask } from './todos';
